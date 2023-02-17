@@ -1,19 +1,18 @@
+<script lang="ts">
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+</script>
+
 <div class="grid min-h-screen place-items-center bg-black text-white">
-	<div class="grid gap-2 text-center">
-		<h1 class="text-5xl font-thin">Welcome to your library project</h1>
-		<p class="mt-4 text-lg">
-			Create your package using @sveltejs/package and preview/showcase your work with SvelteKit
-		</p>
-		<p>
-			Visit
-			<a
-				class="underline underline-offset-4 transition-opacity hover:opacity-75"
-				href="https://kit.svelte.dev"
-			>
-				kit.svelte.dev
-			</a>
-			to read the documentation
-		</p>
+	<div class="grid max-w-lg gap-2 break-all">
+		<h1 class="text-5xl font-thin">ZATS Reddit</h1>
+		<p class="mt-4 text-lg">Posts:</p>
+		<ul>
+			{#each data.posts as post}
+				<li>{JSON.stringify(post)}</li>
+			{/each}
+		</ul>
 	</div>
 </div>
 
