@@ -16,3 +16,11 @@
 		</p>
 	</div>
 </div>
+
+<style lang="postcss">
+	h1 {
+		color: var(--tw-colors-pink-200);
+		font-size: var(--tw-font-size-5xl);
+		font-weight: var(--tw-font-weight-thin);
+	}
+</style>
