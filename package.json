@@ -54,6 +54,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"appwrite": "^10.2.0"
+		"appwrite": "^10.2.0",
+		"zod": "^3.20.6"
 	}
 }

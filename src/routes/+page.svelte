@@ -10,7 +10,7 @@
 		<p class="mt-4 text-lg">Posts:</p>
 		<ul>
 			{#each data.posts as post}
-				<li>{JSON.stringify(post)}</li>
+				<li>{post.title}</li>
 			{/each}
 		</ul>
 	</div>
