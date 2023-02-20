@@ -6,7 +6,11 @@ import { z } from 'zod';
 const postsSchema = z.object({
 	documents: z.array(
 		z.object({
-			title: z.string()
+			title: z.string(),
+			upvotes: z.number(),
+			downvotes: z.number(),
+			subreddit: z.string(),
+			author: z.string().optional()
 		})
 	)
 });

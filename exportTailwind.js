@@ -45,7 +45,7 @@ function exportTailwind(theme, config) {
 }
 
 const vars = exportTailwind(theme, {
-	prefix: 'tw-',
+	prefix: 'exported-',
 	include: ['zIndex', 'colors', 'fontFamily', 'spacing', 'fontSize', 'fontWeight']
 });
 
