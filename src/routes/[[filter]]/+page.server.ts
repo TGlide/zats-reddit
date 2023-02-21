@@ -10,7 +10,8 @@ const postsSchema = z.object({
 			upvotes: z.number(),
 			downvotes: z.number(),
 			subreddit: z.string(),
-			author: z.string().optional()
+			author: z.string().optional().nullable(),
+			$createdAt: z.string()
 		})
 	)
 });
@@ -24,7 +25,7 @@ export const load: PageServerLoad = async () => {
 		return {
 			posts: documents
 		};
-	} catch {
+	} catch (e) {
 		return {
 			posts: []
 		};

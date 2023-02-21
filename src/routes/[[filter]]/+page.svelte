@@ -23,24 +23,24 @@
 	}
 </script>
 
-<ul class="mt-4 pl-4">
+<ul class="mt-4 flex flex-col gap-4 pl-4">
 	{#each data.posts as post, index}
-		{@const score = post.upvotes - post.downvotes}
 		{@const isUpvoted = upvoted.includes(index)}
 		{@const isDownvoted = downvoted.includes(index)}
+		{@const score = post.upvotes + (isUpvoted ? 1 : 0) - (post.downvotes + (isDownvoted ? 1 : 0))}
 
 		<li class="flex items-center gap-4">
-			<span class="text-lg text-gray-6">
+			<span class="block w-2 text-lg text-gray-6">
 				{index + 1}
 			</span>
 
-			<div class="flex flex-col items-center">
+			<div class="flex w-10 flex-col items-center">
 				<button class="text-gray-5" class:text-pink-5={isUpvoted} on:click={upvote(index)}>
-					<Icon name={isUpvoted ? 'arrow-up-solid' : 'arrow-up'} />
+					<Icon name="arrow-up" />
 				</button>
 				<span class="text-sm font-bold text-gray-8">{score}</span>
-				<button class="text-gray-5" class:text-blue-5={isDownvoted} on:click={downvote(index)}>
-					<Icon name={isDownvoted ? 'arrow-down-solid' : 'arrow-down'} />
+				<button class="text-gray-5" class:text-blue-8={isDownvoted} on:click={downvote(index)}>
+					<Icon name="arrow-down" />
 				</button>
 			</div>
 
@@ -59,6 +59,3 @@
 		</li>
 	{/each}
 </ul>
-
-<style lang="postcss">
-</style>
