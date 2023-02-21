@@ -1,35 +1,41 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { Filter } from '$entities/filter';
 	import '$styles/index.css';
 
 	function getHref(path: string, subreddit?: string) {
 		return subreddit ? `/r/${subreddit}${path}` : path;
 	}
 
-	$: filter = $page.params.filter ?? 'best';
+	$: filter = $page.params.filter ?? Filter.Best;
 	$: subreddit = $page.params.subreddit;
 
+	type Path = {
+		href: string;
+		name: Filter;
+	};
+
 	$: paths = [
-		{ href: getHref('/', subreddit), name: 'best' },
-		{ href: getHref('/hot', subreddit), name: 'hot' },
-		{ href: getHref('/new', subreddit), name: 'new' },
-		{ href: getHref('/rising', subreddit), name: 'rising' },
-		{ href: getHref('/controversial', subreddit), name: 'controversial' },
-		{ href: getHref('/top', subreddit), name: 'top' }
-	];
+		{ href: getHref('/', subreddit), name: Filter.Best },
+		{ href: getHref('/hot', subreddit), name: Filter.Hot },
+		{ href: getHref('/new', subreddit), name: Filter.New },
+		{ href: getHref('/rising', subreddit), name: Filter.Rising },
+		{ href: getHref('/controversial', subreddit), name: Filter.Controversial },
+		{ href: getHref('/top', subreddit), name: Filter.Top }
+	] satisfies Path[];
 </script>
 
 <svelte:head>
 	<link rel="preload" href="/logo.webp" as="image" />
 </svelte:head>
 
-<nav class="flex items-end gap-4 border border-solid border-b-blue-5 bg-blue-1">
+<nav class="flex items-end gap-4 border-b border-solid border-b-blue-5 bg-blue-1">
 	<a href="/">
 		<img src="/logo.webp" alt="logo" width="118.44" height="49" class="p-1" />
 	</a>
 
 	{#if subreddit}
-		<h2 class="text-xl font-light">r/{subreddit}</h2>
+		<h2 class="pb-0.5 text-xl font-light">r/{subreddit}</h2>
 	{/if}
 
 	<ul class="-mb-px flex items-end gap-2 ">

@@ -23,11 +23,12 @@
 	}
 </script>
 
-<ul class="mt-4 flex flex-col gap-4 pl-4">
+<ul class="flex flex-col gap-4 p-4">
 	{#each posts as post, index}
 		{@const isUpvoted = upvoted.includes(index)}
 		{@const isDownvoted = downvoted.includes(index)}
 		{@const score = post.upvotes + (isUpvoted ? 1 : 0) - (post.downvotes + (isDownvoted ? 1 : 0))}
+		{@const commentsHref = `/r/${post.subreddit}/${post.$id}`}
 
 		<li class="flex items-center gap-4">
 			<span class="block w-2 text-lg text-gray-6">
@@ -51,16 +52,27 @@
 			</div>
 
 			<div>
-				<h2 class="font-semibold">
+				<a class="font-semibold text-blue-8 hover:underline" href={commentsHref}>
 					{post.title}
-				</h2>
-				<a
-					class="cursor-pointer text-sm text-gray-9  hover:underline"
-					href={`/r/${post.subreddit}`}
-				>
-					{`r/${post.subreddit}`}
 				</a>
+				<div class="flex items-center gap-4">
+					<a
+						class="cursor-pointer text-sm text-gray-9  hover:underline"
+						href={`/r/${post.subreddit}`}
+					>
+						{`r/${post.subreddit}`}
+					</a>
+					<div class="flex items-center gap-1 text-gray-9">
+						<Icon name="messages" size={16} />
+						<a class="cursor-pointer text-sm   hover:underline" href={commentsHref}>
+							??? comments
+						</a>
+					</div>
+				</div>
 			</div>
 		</li>
+		{#if index < posts.length - 1}
+			<hr class="opacity-[15%]" />
+		{/if}
 	{/each}
 </ul>

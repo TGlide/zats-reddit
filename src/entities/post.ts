@@ -5,8 +5,9 @@ export const postSchema = z.object({
 	upvotes: z.number(),
 	downvotes: z.number(),
 	subreddit: z.string(),
-	author: z.string().optional().nullable(),
-	$createdAt: z.string()
+	author: z.string(),
+	$createdAt: z.string(),
+	$id: z.string()
 });
 
 export type Post = z.infer<typeof postSchema>;
