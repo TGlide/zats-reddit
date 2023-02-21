@@ -14,7 +14,9 @@ const config = {
 			$components: './src/components',
 			$stores: './src/stores',
 			$helpers: './src/helpers',
-			$UI: './src/UI'
+			$UI: './src/UI',
+			$entities: './src/entities',
+			$routes: './src/routes'
 		}
 	}
 };

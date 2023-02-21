@@ -2,13 +2,20 @@
 	import { page } from '$app/stores';
 	import '$styles/index.css';
 
-	const paths = [
-		{ path: '/', name: 'best' },
-		{ path: '/hot', name: 'hot' },
-		{ path: '/new', name: 'new' },
-		{ path: '/rising', name: 'rising' },
-		{ path: '/controversial', name: 'controversial' },
-		{ path: '/top', name: 'top' }
+	function getHref(path: string, subreddit?: string) {
+		return subreddit ? `/r/${subreddit}${path}` : path;
+	}
+
+	$: filter = $page.params.filter ?? 'best';
+	$: subreddit = $page.params.subreddit;
+
+	$: paths = [
+		{ href: getHref('/', subreddit), name: 'best' },
+		{ href: getHref('/hot', subreddit), name: 'hot' },
+		{ href: getHref('/new', subreddit), name: 'new' },
+		{ href: getHref('/rising', subreddit), name: 'rising' },
+		{ href: getHref('/controversial', subreddit), name: 'controversial' },
+		{ href: getHref('/top', subreddit), name: 'top' }
 	];
 </script>
 
@@ -16,14 +23,19 @@
 	<link rel="preload" href="/logo.webp" as="image" />
 </svelte:head>
 
-<nav class="flex border border-solid border-b-blue-5 bg-blue-1">
+<nav class="flex items-end gap-4 border border-solid border-b-blue-5 bg-blue-1">
 	<a href="/">
 		<img src="/logo.webp" alt="logo" width="118.44" height="49" class="p-1" />
 	</a>
-	<ul class="ml-4 -mb-px flex items-end gap-2 ">
+
+	{#if subreddit}
+		<h2 class="text-xl font-light">r/{subreddit}</h2>
+	{/if}
+
+	<ul class="-mb-px flex items-end gap-2 ">
 		{#each paths as path}
-			<li data-active={$page.url.pathname === path.path}>
-				<a href={path.path}>{path.name}</a>
+			<li data-active={filter === path.name}>
+				<a href={path.href}>{path.name}</a>
 			</li>
 		{/each}
 	</ul>
