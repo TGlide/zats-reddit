@@ -2,12 +2,12 @@
 	import { page } from '$app/stores';
 	import { Filter } from '$entities/filter';
 	import '$styles/index.css';
+	import { filter } from './filter';
 
 	function getHref(path: string, subreddit?: string) {
 		return subreddit ? `/r/${subreddit}${path}` : path;
 	}
 
-	$: filter = $page.params.filter ?? Filter.Best;
 	$: subreddit = $page.params.subreddit;
 
 	type Path = {
@@ -23,6 +23,8 @@
 		{ href: getHref('/controversial', subreddit), name: Filter.Controversial },
 		{ href: getHref('/top', subreddit), name: Filter.Top }
 	] satisfies Path[];
+
+	$: isCreatePage = $page.url.pathname === '/create';
 </script>
 
 <svelte:head>
@@ -38,16 +40,27 @@
 		<h2 class="pb-0.5 text-xl font-light">r/{subreddit}</h2>
 	{/if}
 
-	<ul class="-mb-px flex items-end gap-2 ">
-		{#each paths as path}
-			<li data-active={filter === path.name}>
-				<a href={path.href}>{path.name}</a>
-			</li>
-		{/each}
-	</ul>
+	{#if !isCreatePage}
+		<ul class="-mb-px flex items-end gap-2">
+			{#each paths as path}
+				<li data-active={$filter === path.name}>
+					<a href={path.href}>{path.name}</a>
+				</li>
+			{/each}
+		</ul>
+	{/if}
 </nav>
 
-<slot />
+<div class="grid grid-cols-12 p-4">
+	<div class={isCreatePage ? 'col-span-12' : 'col-span-9'}>
+		<slot />
+	</div>
+	{#if !isCreatePage}
+		<div class="col-span-3 flex items-start justify-end">
+			<a class="btn" href="/create"> Create new post </a>
+		</div>
+	{/if}
+</div>
 
 <style lang="postcss">
 	ul > li {

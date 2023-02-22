@@ -2,14 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-.img-white {
-  filter: invert(1);
-}
+@layer components {
+	.input {
+		border: 1px solid theme('colors.gray.4');
+		border-radius: theme('borderRadius.md');
+		padding-block: theme('spacing.1');
+		padding-inline: theme('spacing.2');
+		outline: none;
+	}
 
-.img-orange {
-  filter: invert(0.5) sepia(1) saturate(3) hue-rotate(10deg);
-}
+	.input:hover {
+		border-color: theme('colors.gray.5');
+	}
 
-.img-blue {
-  filter: invert(0.5) sepia(1) saturate(3) hue-rotate(200deg);
+	.input:focus {
+		@apply ring ring-blue-2;
+	}
+
+	.required::after {
+		content: '*';
+		color: theme('colors.red.8');
+	}
+
+	.btn {
+		border-radius: theme('borderRadius.md');
+		background-color: theme('colors.blue.5');
+		padding-block: theme('spacing.2');
+		padding-inline: theme('spacing.4');
+		font-size: theme('fontSize.sm');
+		color: theme('colors.white');
+	}
+
+	.btn:hover {
+		background-color: theme('colors.blue.6');
+	}
+
+	.btn:focus {
+		background-color: theme('colors.blue.7');
+	}
 }

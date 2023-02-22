@@ -23,7 +23,7 @@
 	}
 </script>
 
-<ul class="flex flex-col gap-4 p-4">
+<ul class="flex flex-col gap-4">
 	{#each posts as post, index}
 		{@const isUpvoted = upvoted.includes(index)}
 		{@const isDownvoted = downvoted.includes(index)}
