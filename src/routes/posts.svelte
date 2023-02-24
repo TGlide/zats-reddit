@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Post } from '$entities/post';
-	import { toggle } from '$helpers/array';
-	import { votes } from '$stores/votes';
+	import { votes } from '$entities/votes';
 	import Icon from '$UI/Icon.svelte';
 
 	export let posts: Post[];
@@ -55,7 +54,7 @@
 					<div class="flex items-center gap-1 text-gray-9">
 						<Icon name="messages" size={16} />
 						<a class="cursor-pointer text-sm   hover:underline" href={commentsHref}>
-							??? comments
+							{`${post.comments} ${post.comments === 1 ? 'comment' : 'comments'}`}
 						</a>
 					</div>
 				</div>
