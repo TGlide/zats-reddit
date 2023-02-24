@@ -1,32 +1,16 @@
 <script lang="ts">
 	import type { Post } from '$entities/post';
 	import { toggle } from '$helpers/array';
+	import { votes } from '$stores/votes';
 	import Icon from '$UI/Icon.svelte';
 
 	export let posts: Post[];
-
-	let upvoted: number[] = [];
-	let downvoted: number[] = [];
-
-	function upvote(index: number) {
-		return () => {
-			upvoted = toggle(index, upvoted);
-			downvoted = downvoted.filter((i) => i !== index);
-		};
-	}
-
-	function downvote(index: number) {
-		return () => {
-			downvoted = toggle(index, downvoted);
-			upvoted = upvoted.filter((i) => i !== index);
-		};
-	}
 </script>
 
 <ul class="flex flex-col gap-4">
 	{#each posts as post, index}
-		{@const isUpvoted = upvoted.includes(index)}
-		{@const isDownvoted = downvoted.includes(index)}
+		{@const isUpvoted = $votes.upvoted.includes(post.$id)}
+		{@const isDownvoted = $votes.downvoted.includes(post.$id)}
 		{@const score = post.upvotes + (isUpvoted ? 1 : 0) - (post.downvotes + (isDownvoted ? 1 : 0))}
 		{@const commentsHref = `/r/${post.subreddit}/${post.$id}`}
 
@@ -36,11 +20,17 @@
 			</span>
 
 			<div class="flex w-10 flex-col items-center">
-				<button class={isUpvoted ? 'text-pink-5' : 'text-gray-5'} on:click={upvote(index)}>
+				<button
+					class={isUpvoted ? 'text-pink-5' : 'text-gray-5'}
+					on:click={() => votes.upvote(post.$id)}
+				>
 					<Icon name="arrow-up" />
 				</button>
 				<span class="text-sm font-bold text-gray-8">{score}</span>
-				<button class={isDownvoted ? 'text-blue-8' : 'text-gray-5'} on:click={downvote(index)}>
+				<button
+					class={isDownvoted ? 'text-blue-8' : 'text-gray-5'}
+					on:click={() => votes.downvote(post.$id)}
+				>
 					<Icon name="arrow-down" />
 				</button>
 			</div>

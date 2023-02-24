@@ -37,7 +37,7 @@
 	</a>
 
 	{#if subreddit}
-		<h2 class="pb-0.5 text-xl font-light">r/{subreddit}</h2>
+		<a class=" text-lg font-light hover:underline" href={`/r/${subreddit}`}>r/{subreddit}</a>
 	{/if}
 
 	{#if !isCreatePage}
@@ -52,11 +52,11 @@
 </nav>
 
 <div class="grid grid-cols-12 p-4">
-	<div class={isCreatePage ? 'col-span-12' : 'col-span-9'}>
+	<div class={isCreatePage ? 'col-span-12' : 'col-span-10'}>
 		<slot />
 	</div>
 	{#if !isCreatePage}
-		<div class="col-span-3 flex items-start justify-end">
+		<div class="col-span-2 flex items-start justify-end">
 			<a class="btn" href="/create"> Create new post </a>
 		</div>
 	{/if}
