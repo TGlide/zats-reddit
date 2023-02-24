@@ -18,7 +18,7 @@ export const commentSchema = z.object({
 
 export type Comment = z.infer<typeof commentSchema>;
 
-type CommentTreeItem = Omit<Comment, 'parentCommentId'> & {
+export type CommentTreeItem = Omit<Comment, 'parentCommentId'> & {
 	children?: CommentTreeItem[];
 };
 
@@ -68,8 +68,8 @@ export async function getComments(postId: string) {
 		Query.equal('postId', postId)
 	]);
 
-	const { documents } = documentsListSchema(commentSchema).parse(comments);
-	return buildCommentTree(documents);
+	const { documents, total } = documentsListSchema(commentSchema).parse(comments);
+	return { commentTree: buildCommentTree(documents), comments: total };
 }
 
 export async function getNumComments(postId: string) {
