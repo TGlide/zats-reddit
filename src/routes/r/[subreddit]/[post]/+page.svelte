@@ -63,10 +63,21 @@
 	</p>
 {/if}
 
+<form class="mt-8 flex flex-col items-start" method="post" action="?/reply">
+	<input type="hidden" name="postId" value={post.$id} />
+	<textarea
+		name="text"
+		class="h-24 w-1/2 rounded-md border border-solid border-gray-5/50 px-2 py-1"
+		placeholder="Add a comment..."
+	/>
+	<button class="btn mt-2 text-white">Comment</button>
+</form>
+
 <div class="mt-8 flex flex-col gap-2">
+	{#if post.commentTree.length === 0}
+		<p class="text-gray-9">No comments yet</p>
+	{/if}
 	{#each post.commentTree as comment}
-		<Comment {comment} />
+		<Comment {comment} postId={post.$id} />
 	{/each}
 </div>
-
-<pre class="mt-4">{JSON.stringify(data, null, 2)}</pre>

@@ -1,5 +1,5 @@
 {
-	"name": "tzas-reddit",
+	"name": "zats-reddit",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
@@ -13,7 +13,9 @@
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"convert-icons": "node convertIcons.js"
+		"convert-icons": "node convertIcons.js",
+		"aw:collections:pull": "appwrite init collection --all",
+		"aw:collections:push": "appwrite deploy collection --all"
 	},
 	"exports": {
 		".": {
@@ -30,6 +32,7 @@
 		"@sveltejs/kit": "^1.8.3",
 		"@sveltejs/package": "^1.0.0",
 		"@types/node": "^18.13.0",
+		"@types/uuid": "^9.0.1",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.13",
@@ -57,6 +60,7 @@
 	"type": "module",
 	"dependencies": {
 		"appwrite": "^10.2.0",
+		"uuid": "^9.0.0",
 		"zod": "^3.20.6"
 	}
 }

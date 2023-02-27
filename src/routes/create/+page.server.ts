@@ -1,11 +1,17 @@
 import { postInputSchema } from '$entities/post';
 import { APPWRITE_COLLECTION_TEXT_POSTS, APPWRITE_DB } from '$env/static/private';
 import { databases } from '$lib/appwrite.server';
-import { redirect } from '@sveltejs/kit';
+import { getSession } from '$lib/session.server';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ request, cookies }) => {
+		const user = getSession(cookies);
+		if (!user) {
+			throw error(401, 'Unauthorized');
+		}
+
 		const formData = await request.formData();
 		const formDataObj = Object.fromEntries(formData.entries());
 
@@ -17,7 +23,9 @@ export const actions = {
 				APPWRITE_COLLECTION_TEXT_POSTS,
 				'unique()',
 				{
-					...result.data
+					...result.data,
+					restricted: true,
+					author: user
 				}
 			);
 

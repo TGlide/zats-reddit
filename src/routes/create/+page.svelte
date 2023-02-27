@@ -10,9 +10,6 @@
 	<h1 class="text-2xl font-semibold">Create Post</h1>
 
 	<form class="mt-4 flex flex-col gap-4" method="POST" use:enhance>
-		<!-- Author -->
-		<!-- TODO: Use authenticated user -->
-		<input type="hidden" name="author" value="zats-reddit" />
 		<!-- Subreddit -->
 		<fieldset class="flex flex-col gap-2">
 			<label class="required" for="subreddit">Subreddit</label>

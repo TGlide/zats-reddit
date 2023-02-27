@@ -41,3 +41,7 @@
 		background-color: theme('colors.blue.7');
 	}
 }
+
+body {
+	outline: none !important;
+}

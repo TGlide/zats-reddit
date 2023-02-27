@@ -5,3 +5,7 @@ export function toggle<T>(value: T, array: T[]): T[] {
 	}
 	return [...array.slice(0, index), ...array.slice(index + 1)];
 }
+
+export function randomPick<T>(array: T[]): T {
+	return array[Math.floor(Math.random() * array.length)];
+}

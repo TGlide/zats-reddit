@@ -276,7 +276,12 @@ module.exports = {
 				12: '#3D4D04'
 			}
 		},
-		extend: {}
+		extend: {
+			borderRadius: {
+				xs: '0.125rem',
+				sm: '0.25rem'
+			}
+		}
 	},
 	plugins: []
 };

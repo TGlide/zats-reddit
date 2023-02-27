@@ -1,9 +1,5 @@
-import { APPWRITE_COLLECTION_COMMENTS, APPWRITE_DB } from '$env/static/private';
 import { omit } from '$helpers/object';
-import { databases } from '$lib/appwrite.server';
-import { Query } from 'appwrite';
 import { z } from 'zod';
-import { documentsListSchema } from './appwrite';
 
 export const commentSchema = z.object({
 	text: z.string(),
@@ -17,6 +13,16 @@ export const commentSchema = z.object({
 });
 
 export type Comment = z.infer<typeof commentSchema>;
+
+export const commentInputSchema = z.object({
+	text: z.string().trim().min(1),
+	postId: z.string(),
+	parentCommentId: z.string().optional()
+});
+
+export const commentDeleteSchema = z.object({
+	id: z.string()
+});
 
 export type CommentTreeItem = Omit<Comment, 'parentCommentId'> & {
 	children?: CommentTreeItem[];
@@ -61,22 +67,4 @@ export function buildCommentTree(comments: Comment[]) {
 	}
 
 	return Object.values(commentMap);
-}
-
-export async function getComments(postId: string) {
-	const comments = await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
-		Query.equal('postId', postId)
-	]);
-
-	const { documents, total } = documentsListSchema(commentSchema).parse(comments);
-	return { commentTree: buildCommentTree(documents), comments: total };
-}
-
-export async function getNumComments(postId: string) {
-	const comments = await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
-		Query.equal('postId', postId)
-	]);
-
-	const { total } = documentsListSchema(commentSchema).parse(comments);
-	return total;
 }

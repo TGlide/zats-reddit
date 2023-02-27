@@ -3,6 +3,7 @@
 	import { Filter } from '$entities/filter';
 	import '$styles/index.css';
 	import { filter } from './filter';
+	import { user } from './user';
 
 	function getHref(path: string, subreddit?: string) {
 		return subreddit ? `/r/${subreddit}${path}` : path;
@@ -31,24 +32,26 @@
 	<link rel="preload" href="/logo.webp" as="image" />
 </svelte:head>
 
-<nav class="flex items-end gap-4 border-b border-solid border-b-blue-5 bg-blue-1">
+<nav class="flex items-end gap-4 border-b border-solid border-b-blue-5 bg-blue-1 px-4">
 	<a href="/">
 		<img src="/logo.webp" alt="logo" width="118.44" height="49" class="p-1" />
 	</a>
 
 	{#if subreddit}
-		<a class=" text-lg font-light hover:underline" href={`/r/${subreddit}`}>r/{subreddit}</a>
+		<a class="text-lg font-light hover:underline" href={`/r/${subreddit}`}>r/{subreddit}</a>
 	{/if}
 
 	{#if !isCreatePage}
 		<ul class="-mb-px flex items-end gap-2">
 			{#each paths as path}
-				<li data-active={$filter === path.name}>
+				<li class="nav-tag" data-active={$filter === path.name}>
 					<a href={path.href}>{path.name}</a>
 				</li>
 			{/each}
 		</ul>
 	{/if}
+
+	<div class="tag ml-auto self-center">User: {$user}</div>
 </nav>
 
 <div class="grid grid-cols-12 p-4">
@@ -63,17 +66,23 @@
 </div>
 
 <style lang="postcss">
-	ul > li {
+	.tag,
+	.nav-tag {
 		background-color: theme(colors.white);
 		border: 1px solid transparent;
-		border-bottom-color: theme(colors.blue.5);
-		border-radius: 4px 4px 0 0;
+
+		border-radius: theme('borderRadius.sm');
 		color: theme(colors.blue.8);
 
 		font-size: theme(fontSize.sm);
 		font-weight: theme(fontWeight.bold);
 
 		padding-inline: theme(spacing.2);
+	}
+
+	.nav-tag {
+		border-bottom-color: theme(colors.blue.5);
+		border-radius: 4px 4px 0 0;
 
 		&[data-active='true'] {
 			border-color: theme(colors.blue.5);
