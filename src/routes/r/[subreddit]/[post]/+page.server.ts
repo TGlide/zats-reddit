@@ -32,12 +32,7 @@ export const actions: Actions = {
 			};
 		}
 	},
-	async delete({ request, cookies }) {
-		const user = getSession(cookies);
-		if (!user) {
-			throw error(401, 'Unauthorized');
-		}
-
+	async delete({ request }) {
 		const data = await getFormDataObj(request);
 		const result = deleteCommentHandler.parse(data);
 
