@@ -2,8 +2,7 @@
 	import { page } from '$app/stores';
 	import { Filter } from '$entities/filter';
 	import '$styles/index.css';
-	import { filter } from './filter';
-	import { user } from './user';
+	import { user, filter } from './stores';
 
 	function getHref(path: string, subreddit?: string) {
 		return subreddit ? `/r/${subreddit}${path}` : path;

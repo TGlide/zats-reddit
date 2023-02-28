@@ -1,14 +1,13 @@
 import { z } from 'zod';
+import { documentSchema } from './appwrite';
 import type { CommentTree } from './comment';
 
-export const postSchema = z.object({
+export const postSchema = documentSchema.extend({
 	title: z.string(),
 	upvotes: z.number(),
 	downvotes: z.number(),
 	subreddit: z.string(),
 	author: z.string(),
-	$createdAt: z.string(),
-	$id: z.string(),
 	description: z.string().nullable(),
 	restricted: z.boolean().nullable()
 });

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { CommentTreeItem } from '$entities/comment';
-	import { user } from '$routes/user';
+	import { user } from '$routes/stores';
 	import Icon from '$UI/Icon.svelte';
 
 	export let comment: CommentTreeItem;
@@ -65,7 +65,7 @@
 </div>
 
 <style lang="postcss">
-	.actions > * {
+	.actions * {
 		color: theme('colors.gray.8');
 
 		&:is(button):hover {

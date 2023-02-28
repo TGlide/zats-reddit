@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export function documentsListSchema<T extends z.ZodTypeAny>(schema: T) {
+export function documentsListSchema<T extends z.AnyZodObject>(schema: T) {
 	return z.object({
 		documents: z.array(schema),
 		total: z.number()

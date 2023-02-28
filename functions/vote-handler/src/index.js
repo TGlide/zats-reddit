@@ -38,19 +38,21 @@ module.exports = async function (req, res) {
 			.setSelfSigned(true);
 	}
 
-	const DB_ID = '63eec9cedfb0d01be8d2';
-	const TEXT_POSTS_COLLECTION_ID = '63eec9d57ef586ca8c2e';
-
-	const { direction, postId, author, ...rest } = JSON.parse(
-		req.variables['APPWRITE_FUNCTION_EVENT_DATA']
-	);
-	console.log(direction, postId, author, rest);
+	const { DB_ID, TEXT_POSTS_COLLECTION_ID, VOTES_COLLECTION_ID } = req.variables;
+	const { postId } = JSON.parse(req.variables['APPWRITE_FUNCTION_EVENT_DATA']);
 
 	// Get post document
-	const post = await database.getDocument(DB_ID, TEXT_POSTS_COLLECTION_ID, postId);
-	console.log(post.upvotes, post.downvotes);
+	const postVotes = await database.listDocuments(DB_ID, VOTES_COLLECTION_ID, [
+		sdk.Query.equal('postId', postId)
+	]);
+	const upvotes = postVotes.documents.reduce((acc, vote) => {
+		return vote.direction === 'UP' ? acc + 1 : acc;
+	}, 0);
+	const downvotes = postVotes.total - upvotes;
+
+	await database.updateDocument(DB_ID, TEXT_POSTS_COLLECTION_ID, postId, { upvotes, downvotes });
 
 	res.json({
-		areDevelopersAwesome: true
+		ok: true
 	});
 };

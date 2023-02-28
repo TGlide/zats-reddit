@@ -1,6 +1,8 @@
 import { APPWRITE_COLLECTION_TEXT_POSTS, APPWRITE_DB } from '$env/static/private';
+import { createZodFunctionHandler } from '$helpers/zod';
 import { databases } from '$lib/appwrite.server';
 import { Query } from 'appwrite';
+import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
 import { getComments, getNumComments } from './comment.server';
 import { postSchema, type ExpandedPost, type Post } from './post';
@@ -73,3 +75,18 @@ export async function getPost(args: GetPostArgs): Promise<ExpandedPost> {
 		throw new Error(`Post with id '${args.postId}' not found`);
 	}
 }
+
+export const createPostHandler = createZodFunctionHandler(
+	z.object({
+		title: z.string().trim().min(1),
+		subreddit: z.string().trim().min(1),
+		description: z.string().optional(),
+		author: z.string().trim().min(1)
+	}),
+	async (args) => {
+		return await databases.createDocument(APPWRITE_DB, APPWRITE_COLLECTION_TEXT_POSTS, 'unique()', {
+			...args,
+			restricted: true
+		});
+	}
+);

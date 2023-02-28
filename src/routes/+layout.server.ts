@@ -1,4 +1,4 @@
-import { getVotes } from '$entities/vote';
+import { getVotes } from '$entities/vote.server';
 import { getSession } from '$lib/session.server';
 import type { LayoutServerLoad } from './$types';
 

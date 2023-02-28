@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import type { Post } from '$entities/post';
-	import { downvotes, upvotes } from '$routes/votes';
+	import { downvotes, upvotes } from '$routes/stores';
 	import Icon from '$UI/Icon.svelte';
 
 	export let post: Post;
