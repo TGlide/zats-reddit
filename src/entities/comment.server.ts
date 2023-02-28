@@ -41,5 +41,5 @@ export async function postComment(args: PostCommentArgs) {
 		}
 	);
 
-	return documentSchema(commentSchema).parse(comment);
+	return documentSchema.extend(commentSchema.shape).parse(comment);
 }

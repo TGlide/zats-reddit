@@ -14,16 +14,6 @@ export const commentSchema = z.object({
 
 export type Comment = z.infer<typeof commentSchema>;
 
-export const commentInputSchema = z.object({
-	text: z.string().trim().min(1),
-	postId: z.string(),
-	parentCommentId: z.string().optional()
-});
-
-export const commentDeleteSchema = z.object({
-	id: z.string()
-});
-
 export type CommentTreeItem = Omit<Comment, 'parentCommentId'> & {
 	children?: CommentTreeItem[];
 };

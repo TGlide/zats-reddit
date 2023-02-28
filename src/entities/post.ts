@@ -9,14 +9,9 @@ export const postSchema = z.object({
 	author: z.string(),
 	$createdAt: z.string(),
 	$id: z.string(),
-	description: z.string().nullable()
+	description: z.string().nullable(),
+	restricted: z.boolean().nullable()
 });
 
 export type Post = z.infer<typeof postSchema> & { comments: number };
 export type ExpandedPost = Post & { commentTree: CommentTree };
-
-export const postInputSchema = z.object({
-	title: z.string().trim().min(1),
-	subreddit: z.string().trim().min(1),
-	description: z.string().optional()
-});

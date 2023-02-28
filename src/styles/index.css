@@ -40,6 +40,22 @@
 	.btn:focus {
 		background-color: theme('colors.blue.7');
 	}
+
+	.btn-outline {
+		@apply btn;
+		background-color: transparent;
+		border: 1px solid theme('colors.blue.5');
+		color: theme('colors.blue.5');
+	}
+
+	.btn-outline:hover {
+		color: theme('colors.white');
+		border-color: theme('colors.blue.6');
+	}
+
+	.btn-outline:focus {
+		border-color: theme('colors.blue.7');
+	}
 }
 
 body {

@@ -1,9 +1,9 @@
-import { commentDeleteSchema, commentInputSchema } from '$entities/comment';
 import { getPost } from '$entities/post.server';
 import { APPWRITE_COLLECTION_COMMENTS, APPWRITE_DB } from '$env/static/private';
 import { databases } from '$lib/appwrite.server';
 import { getSession } from '$lib/session.server';
 import { error } from '@sveltejs/kit';
+import { z } from 'zod';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, parent }) => {
@@ -27,6 +27,12 @@ export const actions: Actions = {
 
 		const formData = await request.formData();
 		const formDataObj = Object.fromEntries(formData.entries());
+
+		const commentInputSchema = z.object({
+			text: z.string().trim().min(1),
+			postId: z.string(),
+			parentCommentId: z.string().optional()
+		});
 
 		const result = commentInputSchema.safeParse(formDataObj);
 
@@ -57,6 +63,10 @@ export const actions: Actions = {
 
 		const formData = await request.formData();
 		const formDataObj = Object.fromEntries(formData.entries());
+
+		const commentDeleteSchema = z.object({
+			id: z.string()
+		});
 
 		const result = commentDeleteSchema.safeParse(formDataObj);
 

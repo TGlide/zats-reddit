@@ -48,11 +48,11 @@
 					class="h-24 w-1/2 rounded-md border border-solid border-gray-5/50 px-2 py-1"
 					placeholder="Add a comment..."
 				/>
-				<div class="flex gap-2">
-					<button class="btn mt-2 text-white" on:click|preventDefault={() => (replying = false)}
-						>Cancel</button
-					>
-					<button class="btn mt-2 text-white" type="submit">Comment</button>
+				<div class="mt-2 flex gap-2">
+					<button class="btn" type="submit">Comment</button>
+					<button class="btn-outline" on:click|preventDefault={() => (replying = false)}>
+						Cancel
+					</button>
 				</div>
 			</form>
 		{/if}
