@@ -12,18 +12,23 @@ Zod + Appwrite + Tailwind + SvelteKit = Reddit (clone)
 
 ## TODO
 
+### Features
+
 - [ ] Link Posts
 - [ ] Image/Video posts
-- [ ] Make sure no duplicate accounts are created
-- [ ] Responsiveness
-- [ ] Change fonts
-- [ ] 404 page
-- [ ] Favicon
-- [ ] Pretty readme
-- [ ] Post deletion function
-- [ ] Comment deletion function
 - [ ] Post filter logic
 - [ ] Comment filter logic
 - [ ] Implement votes functionality (upvote/downvote)
 - [x] Create comments
 - [x] Session
+
+### Enhancements
+
+- [ ] Make sure no duplicate accounts are created
+- [ ] Post deletion function
+- [ ] Comment deletion function
+- [ ] Responsiveness
+- [ ] Change fonts
+- [ ] 404 page
+- [ ] Favicon
+- [ ] Pretty readme
