@@ -2,7 +2,34 @@
 
 Zod + Appwrite + Tailwind + SvelteKit = Reddit (clone)
 
+<p align="center">
+  <h3 align="center">zats-reddit</h3>
+  <p align="center">
+    Zod + Appwrite + Tailwind + SvelteKit = Reddit clone
+  </p>
+  
+ <p align="center">
+    <a href="https://zod.dev/">
+      <img src="https://img.shields.io/badge/types-zod-%23007ACC?style=for-the-badge&logo=typescript" alt="Built with Typescript">
+    </a>
+    <a href="https://www.appwrite.io/">
+      <img src="https://img.shields.io/badge/baas-appwrite-%23F02E65?style=for-the-badge&logo=appwrite" alt="Built with Appwrite">
+    </a>
+    <a href="https://tailwindcss.com/">
+      <img src="https://img.shields.io/badge/stlying-tailwind-%2338B2AC?style=for-the-badge&logo=tailwind-css" alt="Built with Tailwind">
+    </a>
+    <a href="https://kit.svelte.dev/">
+      <img src="https://img.shields.io/badge/framework-sveltekit-%23FF3E00?style=for-the-badge&logo=svelte" alt="Built with SvelteKit">
+    </a>
+    
+  </p>
+</p>
+
 ## Description
+
+This is a reddit clone built with Zod, Appwrite, Tailwind, and SvelteKit. It was built to showcase Appwrite's capabilities in a real-world full-stack application.
+
+It is also a experiment on using Zod for validation in a SvelteKit + Appwrite application.
 
 ### Details
 
