@@ -1,11 +1,16 @@
 <script lang="ts">
 	import Comment from '$components/Comment.svelte';
 	import PostThumb from '$components/PostThumb.svelte';
+	import { subreddit } from '$routes/stores';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	const post = data.post;
 </script>
+
+<svelte:head>
+	<title>zats reddit: /r/{$subreddit} - {post.title}</title>
+</svelte:head>
 
 <PostThumb {post} />
 {#if post.description}

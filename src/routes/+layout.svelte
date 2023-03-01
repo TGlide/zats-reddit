@@ -11,13 +11,11 @@
 	// JS
 	import { page } from '$app/stores';
 	import { Filter } from '$entities/filter';
-	import { user, filter } from './stores';
+	import { user, filter, subreddit } from './stores';
 
 	function getHref(path: string, subreddit?: string) {
 		return subreddit ? `/r/${subreddit}${path}` : path;
 	}
-
-	$: subreddit = $page.params.subreddit;
 
 	type Path = {
 		href: string;
@@ -25,11 +23,11 @@
 	};
 
 	$: paths = [
-		{ href: getHref('/', subreddit), name: Filter.Best },
-		{ href: getHref('/hot', subreddit), name: Filter.Hot },
-		{ href: getHref('/new', subreddit), name: Filter.New },
-		{ href: getHref('/rising', subreddit), name: Filter.Rising },
-		{ href: getHref('/controversial', subreddit), name: Filter.Controversial }
+		{ href: getHref('/', $subreddit), name: Filter.Best },
+		{ href: getHref('/hot', $subreddit), name: Filter.Hot },
+		{ href: getHref('/new', $subreddit), name: Filter.New },
+		{ href: getHref('/rising', $subreddit), name: Filter.Rising },
+		{ href: getHref('/controversial', $subreddit), name: Filter.Controversial }
 	] satisfies Path[];
 
 	$: isCreatePage = $page.url.pathname === '/create';
@@ -47,9 +45,9 @@
 		<img src="/logo.webp" alt="logo" width="118.44" height="49" class="p-1" />
 	</a>
 
-	{#if subreddit}
-		<a class="col-span-12 row-start-2 text-lg font-light hover:underline" href={`/r/${subreddit}`}
-			>r/{subreddit}</a
+	{#if $subreddit}
+		<a class="col-span-12 row-start-2 text-lg font-light hover:underline" href={`/r/${$subreddit}`}
+			>r/{$subreddit}</a
 		>
 	{/if}
 

@@ -18,3 +18,7 @@ export const upvotes = derived(page, ($page) => {
 export const downvotes = derived(page, ($page) => {
 	return $page.data.downvotes as string[];
 });
+
+export const subreddit = derived(page, ($page) => {
+	return $page.params.subreddit;
+});
