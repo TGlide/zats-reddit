@@ -1,8 +1,5 @@
 <p align="center">
   <h3 align="center">zats-reddit</h3>
-  <p align="center">
-    Zod + Appwrite + Tailwind + SvelteKit = Reddit clone
-  </p>
   
  <p align="center">
     <a href="https://zod.dev/">
