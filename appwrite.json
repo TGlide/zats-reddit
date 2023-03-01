@@ -271,7 +271,7 @@
         {
             "$id": "63fe16124ca837706abe",
             "$createdAt": "2023-02-28T14:56:18.315+00:00",
-            "$updatedAt": "2023-02-28T17:22:32.979+00:00",
+            "$updatedAt": "2023-03-01T09:23:27.921+00:00",
             "$permissions": [
                 "create(\"any\")",
                 "read(\"any\")",
@@ -279,7 +279,7 @@
                 "delete(\"any\")"
             ],
             "databaseId": "63eec9cedfb0d01be8d2",
-            "name": "votes",
+            "name": "post-votes",
             "enabled": true,
             "documentSecurity": false,
             "attributes": [
@@ -291,7 +291,8 @@
                     "array": false,
                     "elements": [
                         "UP",
-                        "DOWN"
+                        "DOWN",
+												"NONE"
                     ],
                     "format": "enum",
                     "default": null
@@ -346,6 +347,92 @@
                     "status": "available",
                     "attributes": [
                         "postId"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "63fe17124cb835706abe",
+            "$createdAt": "2023-03-01T09:24:52.995+00:00",
+            "$updatedAt": "2023-03-01T09:24:52.995+00:00",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "63eec9cedfb0d01be8d2",
+            "name": "comment-votes",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "author",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 128,
+                    "default": null
+                },
+                {
+                    "key": "direction",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "UP",
+                        "DOWN",
+												"NONE"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "commentId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 128,
+                    "default": null
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "author"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "index_2",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "author",
+                        "commentId"
+                    ],
+                    "orders": [
+                        "ASC",
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "index_3",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "commentId"
                     ],
                     "orders": [
                         "ASC"

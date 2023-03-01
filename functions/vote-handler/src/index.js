@@ -48,7 +48,9 @@ module.exports = async function (req, res) {
 	const upvotes = postVotes.documents.reduce((acc, vote) => {
 		return vote.direction === 'UP' ? acc + 1 : acc;
 	}, 0);
-	const downvotes = postVotes.total - upvotes;
+	const downvotes = postVotes.documents.reduce((acc, vote) => {
+		return vote.direction === 'DOWN' ? acc + 1 : acc;
+	}, 0);
 
 	await database.updateDocument(DB_ID, TEXT_POSTS_COLLECTION_ID, postId, { upvotes, downvotes });
 

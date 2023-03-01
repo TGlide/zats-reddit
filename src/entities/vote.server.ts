@@ -20,7 +20,7 @@ export async function getVotes({ author, postId }: GetVotesArgs) {
 export const voteHandler = createZodFunctionHandler(
 	z.object({
 		postId: z.string().trim().min(1),
-		direction: z.enum(['UP', 'DOWN']),
+		direction: z.enum(['UP', 'DOWN', 'NONE']),
 		author: z.string().trim().min(1),
 		// We use this in the form action to redirect back to the post
 		redirectTo: z.string().url()
@@ -34,19 +34,14 @@ export const voteHandler = createZodFunctionHandler(
 		]);
 		const vote = votes.documents[0];
 
-		if (!vote) {
+		if (vote) {
+			await databases.updateDocument(APPWRITE_DB, APPWRITE_COLLECTION_VOTES, vote.$id, {
+				direction
+			});
+		} else {
 			await databases.createDocument(APPWRITE_DB, APPWRITE_COLLECTION_VOTES, 'unique()', {
 				author,
 				postId,
-				direction
-			});
-			return;
-		}
-
-		if (vote.direction === direction) {
-			await databases.deleteDocument(APPWRITE_DB, APPWRITE_COLLECTION_VOTES, vote.$id);
-		} else {
-			await databases.updateDocument(APPWRITE_DB, APPWRITE_COLLECTION_VOTES, vote.$id, {
 				direction
 			});
 		}

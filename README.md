@@ -28,6 +28,7 @@ Zod + Appwrite + Tailwind + SvelteKit = Reddit (clone)
 - [ ] Make sure no duplicate accounts are created
 - [ ] Post deletion function
 - [ ] Comment deletion function
+- [ ] Delete stuff after 24 hours
 - [ ] Responsiveness
 - [ ] Change fonts
 - [ ] 404 page
