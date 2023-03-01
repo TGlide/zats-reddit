@@ -18,13 +18,13 @@
 	<input type="hidden" name="postId" value={post.$id} />
 	<textarea
 		name="text"
-		class="h-24 w-1/2 rounded-md border border-solid border-gray-5/50 px-2 py-1"
+		class="h-24 w-full rounded-md border border-solid border-gray-5/50 px-2 py-1 lg:w-1/2"
 		placeholder="Add a comment..."
 	/>
 	<button class="btn mt-2 text-white">Comment</button>
 </form>
 
-<div class="mt-8 flex flex-col gap-2">
+<div class="mt-8 flex flex-col gap-4">
 	{#if post.commentTree.length === 0}
 		<p class="text-gray-9">No comments yet</p>
 	{/if}

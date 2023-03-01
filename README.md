@@ -12,18 +12,19 @@ Zod + Appwrite + Tailwind + SvelteKit = Reddit (clone)
 
 ## TODO
 
-### Features
+### Requirements
 
 - [ ] Link Posts
 - [ ] Image/Video posts
 - [ ] Post filter logic
 - [ ] Comment filter logic
+- [ ] Responsiveness
 - [x] Votes on comments
 - [x] Implement votes functionality (upvote/downvote)
 - [x] Create comments
 - [x] Session
 
-### Enhancements
+### Nice-to-haves
 
 - [ ] Make sure no duplicate accounts are created
 - [ ] Post deletion function

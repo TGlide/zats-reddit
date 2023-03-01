@@ -3,7 +3,6 @@ export enum Filter {
 	Hot = 'hot',
 	New = 'new',
 	Rising = 'rising',
-	Top = 'top',
 	Controversial = 'controversial'
 }
 

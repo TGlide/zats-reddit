@@ -20,28 +20,32 @@
 		{ href: getHref('/hot', subreddit), name: Filter.Hot },
 		{ href: getHref('/new', subreddit), name: Filter.New },
 		{ href: getHref('/rising', subreddit), name: Filter.Rising },
-		{ href: getHref('/controversial', subreddit), name: Filter.Controversial },
-		{ href: getHref('/top', subreddit), name: Filter.Top }
+		{ href: getHref('/controversial', subreddit), name: Filter.Controversial }
 	] satisfies Path[];
 
 	$: isCreatePage = $page.url.pathname === '/create';
+	$: isPostPage = $page.url.pathname.match(/^\/r\/.+?\/.+?$/);
 </script>
 
 <svelte:head>
 	<link rel="preload" href="/logo.webp" as="image" />
 </svelte:head>
 
-<nav class="flex items-end gap-4 border-b border-solid border-b-blue-5 bg-blue-1 px-4">
-	<a href="/">
+<nav
+	class="grid grid-cols-12 gap-2 border-b border-solid border-b-blue-5 bg-blue-1 px-2 lg:flex lg:items-end lg:gap-4 lg:px-4"
+>
+	<a href="/" class="col-span-5 shrink-0">
 		<img src="/logo.webp" alt="logo" width="118.44" height="49" class="p-1" />
 	</a>
 
 	{#if subreddit}
-		<a class="text-lg font-light hover:underline" href={`/r/${subreddit}`}>r/{subreddit}</a>
+		<a class="col-span-12 row-start-2 text-lg font-light hover:underline" href={`/r/${subreddit}`}
+			>r/{subreddit}</a
+		>
 	{/if}
 
 	{#if !isCreatePage}
-		<ul class="-mb-px flex items-end gap-2">
+		<ul class="row-start-3 -mb-px flex items-end  gap-2">
 			{#each paths as path}
 				<li class="nav-tag" data-active={$filter === path.name}>
 					<a href={path.href}>{path.name}</a>
@@ -50,15 +54,21 @@
 		</ul>
 	{/if}
 
-	<div class="tag ml-auto self-center">User: {$user}</div>
+	<div
+		class="col-span-7 flex justify-end self-end whitespace-nowrap pb-0.5 lg:ml-auto lg:self-center lg:pb-0"
+	>
+		<span class="tag">
+			User: {$user}
+		</span>
+	</div>
 </nav>
 
-<div class="grid grid-cols-12 p-4">
+<div class="flex flex-col-reverse gap-4 px-2 py-4 lg:grid lg:grid-cols-12 lg:gap-0 lg:p-4">
 	<div class={isCreatePage ? 'col-span-12' : 'col-span-10'}>
 		<slot />
 	</div>
-	{#if !isCreatePage}
-		<div class="col-span-2 flex items-start justify-end">
+	{#if !isCreatePage && !isPostPage}
+		<div class="col-span-2 flex items-start lg:justify-end">
 			<a class="btn" href="/create"> Create new post </a>
 		</div>
 	{/if}

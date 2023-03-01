@@ -9,10 +9,12 @@
 	let replying = false;
 </script>
 
-<div class="rounded-sm border border-solid border-gray-4 px-2 py-1 text-sm">
+<div class={`border-l border-solid border-gray-4 pl-2 text-sm `}>
 	<div class="flex items-center gap-2">
 		<button class="text-blue-8" on:click={() => (expanded = !expanded)}>
-			[{expanded ? '-' : '+'}]
+			[<span class="inline-block w-3 text-center">
+				{expanded ? '-' : '+'}
+			</span>]
 		</button>
 		<span class="font-semibold">{comment.author}</span>
 	</div>
@@ -38,7 +40,7 @@
 				<input type="hidden" name="parentCommentId" value={comment.$id} />
 				<textarea
 					name="text"
-					class="h-24 w-1/2 rounded-md border border-solid border-gray-5/50 px-2 py-1"
+					class="h-24 w-full rounded-md border border-solid border-gray-5/50 px-2 py-1 lg:w-1/2"
 					placeholder="Add a comment..."
 				/>
 				<div class="mt-2 flex gap-2">
@@ -50,7 +52,7 @@
 			</form>
 		{/if}
 		{#each comment?.children ?? [] as child}
-			<div class="py-2">
+			<div class="pl-1 pt-2 ">
 				<svelte:self comment={child} {postId} />
 			</div>
 		{/each}
