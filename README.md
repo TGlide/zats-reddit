@@ -1,7 +1,3 @@
-# zats-reddit
-
-Zod + Appwrite + Tailwind + SvelteKit = Reddit (clone)
-
 <p align="center">
   <h3 align="center">zats-reddit</h3>
   <p align="center">
