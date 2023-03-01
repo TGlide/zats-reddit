@@ -50,10 +50,9 @@ It is also a experiment on using Zod for validation in a SvelteKit + Appwrite ap
 - [ ] Post deletion function
 - [ ] Comment deletion function
 - [ ] Delete stuff after 24 hours
-- [ ] Responsiveness
-- [ ] Change fonts
 - [ ] 404 page
 - [ ] Favicon
-- [ ] Pretty readme
 - [ ] Review code organization
 - [ ] Review progressive enhancement
+- [x] Pretty readme
+- [x] Change fonts
