@@ -122,9 +122,17 @@
 
 	button[data-upvoted='true'] {
 		@apply text-pink-5;
+
+		&:hover {
+			@apply text-pink-7;
+		}
 	}
 
 	button[data-downvoted='true'] {
-		@apply text-blue-8;
+		@apply text-blue-5;
+
+		&:hover {
+			@apply text-blue-7;
+		}
 	}
 </style>

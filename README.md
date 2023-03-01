@@ -18,7 +18,7 @@ Zod + Appwrite + Tailwind + SvelteKit = Reddit (clone)
 - [ ] Image/Video posts
 - [ ] Post filter logic
 - [ ] Comment filter logic
-- [ ] Responsiveness
+- [x] Responsiveness
 - [x] Votes on comments
 - [x] Implement votes functionality (upvote/downvote)
 - [x] Create comments
