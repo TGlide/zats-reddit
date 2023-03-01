@@ -14,3 +14,7 @@ export const postSchema = documentSchema.extend({
 
 export type Post = z.infer<typeof postSchema> & { comments: number };
 export type ExpandedPost = Post & { commentTree: CommentTree };
+
+export function isPost(obj: unknown): obj is Post {
+	return postSchema.safeParse(obj).success;
+}

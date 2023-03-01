@@ -1,460 +1,307 @@
 {
-    "projectId": "63eec9c98d7e77e70d1f",
-    "projectName": "zats-reddit",
-    "collections": [
-        {
-            "$id": "63eec9d57ef586ca8c2e",
-            "$createdAt": "2023-02-28T14:52:41.453+00:00",
-            "$updatedAt": "2023-02-28T14:52:41.453+00:00",
-            "$permissions": [
-                "create(\"any\")",
-                "read(\"any\")",
-                "update(\"any\")",
-                "delete(\"any\")"
-            ],
-            "databaseId": "63eec9cedfb0d01be8d2",
-            "name": "text-posts",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "restricted",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "default": true
-                },
-                {
-                    "key": "downvotes",
-                    "type": "integer",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "min": 0,
-                    "max": 9223372036854775807,
-                    "default": 0
-                },
-                {
-                    "key": "author",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 64,
-                    "default": null
-                },
-                {
-                    "key": "title",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 1024,
-                    "default": null
-                },
-                {
-                    "key": "subreddit",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 64,
-                    "default": null
-                },
-                {
-                    "key": "upvotes",
-                    "type": "integer",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "min": 0,
-                    "max": 9223372036854775807,
-                    "default": 0
-                },
-                {
-                    "key": "description",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 32000,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "index_6",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "subreddit",
-                        "restricted"
-                    ],
-                    "orders": [
-                        "ASC",
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "index_4",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "author",
-                        "restricted"
-                    ],
-                    "orders": [
-                        "ASC",
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "id",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "$id"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "restricted",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "restricted"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "subreddit",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "subreddit"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "index_7",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "subreddit",
-                        "author",
-                        "restricted"
-                    ],
-                    "orders": [
-                        "ASC",
-                        "ASC",
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "index_5",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "$id",
-                        "author",
-                        "restricted"
-                    ],
-                    "orders": [
-                        "ASC",
-                        "ASC",
-                        "ASC"
-                    ]
-                }
-            ]
-        },
-        {
-            "$id": "63f50f66980067d09649",
-            "$createdAt": "2023-02-28T14:52:47.185+00:00",
-            "$updatedAt": "2023-02-28T14:52:47.185+00:00",
-            "$permissions": [
-                "create(\"any\")",
-                "read(\"any\")",
-                "update(\"any\")",
-                "delete(\"any\")"
-            ],
-            "databaseId": "63eec9cedfb0d01be8d2",
-            "name": "comments",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "restricted",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "default": true
-                },
-                {
-                    "key": "upvotes",
-                    "type": "integer",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "min": 0,
-                    "max": 9223372036854775807,
-                    "default": 0
-                },
-                {
-                    "key": "author",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 64,
-                    "default": null
-                },
-                {
-                    "key": "postId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 128,
-                    "default": null
-                },
-                {
-                    "key": "parentCommentId",
-                    "type": "string",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "size": 128,
-                    "default": null
-                },
-                {
-                    "key": "text",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 32000,
-                    "default": null
-                },
-                {
-                    "key": "downvotes",
-                    "type": "integer",
-                    "status": "available",
-                    "required": false,
-                    "array": false,
-                    "min": 0,
-                    "max": 9223372036854775807,
-                    "default": 0
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "postId",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "postId"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
-        },
-        {
-            "$id": "63fe16124ca837706abe",
-            "$createdAt": "2023-02-28T14:56:18.315+00:00",
-            "$updatedAt": "2023-03-01T09:23:27.921+00:00",
-            "$permissions": [
-                "create(\"any\")",
-                "read(\"any\")",
-                "update(\"any\")",
-                "delete(\"any\")"
-            ],
-            "databaseId": "63eec9cedfb0d01be8d2",
-            "name": "post-votes",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "direction",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "elements": [
-                        "UP",
-                        "DOWN",
-												"NONE"
-                    ],
-                    "format": "enum",
-                    "default": null
-                },
-                {
-                    "key": "postId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 128,
-                    "default": null
-                },
-                {
-                    "key": "author",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 128,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "index_1",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "author"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "index_2",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "author",
-                        "postId"
-                    ],
-                    "orders": [
-                        "ASC",
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "index_3",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "postId"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
-        },
-        {
-            "$id": "63fe17124cb835706abe",
-            "$createdAt": "2023-03-01T09:24:52.995+00:00",
-            "$updatedAt": "2023-03-01T09:24:52.995+00:00",
-            "$permissions": [
-                "create(\"any\")",
-                "read(\"any\")",
-                "update(\"any\")",
-                "delete(\"any\")"
-            ],
-            "databaseId": "63eec9cedfb0d01be8d2",
-            "name": "comment-votes",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "author",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 128,
-                    "default": null
-                },
-                {
-                    "key": "direction",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "elements": [
-                        "UP",
-                        "DOWN",
-												"NONE"
-                    ],
-                    "format": "enum",
-                    "default": null
-                },
-                {
-                    "key": "commentId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 128,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "index_1",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "author"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "index_2",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "author",
-                        "commentId"
-                    ],
-                    "orders": [
-                        "ASC",
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "index_3",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "commentId"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
-        }
-    ],
-    "functions": [
-        {
-            "$id": "63fe188e4893f34dab48",
-            "entrypoint": "src/index.js",
-            "events": [
-                "databases.*.collections.63fe16124ca837706abe.documents.*.create",
-                "databases.*.collections.63fe16124ca837706abe.documents.*.update",
-                "databases.*.collections.63fe16124ca837706abe.documents.*.delete"
-            ],
-            "name": "vote-handler",
-            "runtime": "node-16.0",
-            "schedule": "",
-            "timeout": 15,
-            "path": "functions/vote-handler"
-        }
-    ]
+	"projectId": "63eec9c98d7e77e70d1f",
+	"projectName": "zats-reddit",
+	"collections": [
+		{
+			"$id": "63eec9d57ef586ca8c2e",
+			"$createdAt": "2023-02-28T14:52:41.453+00:00",
+			"$updatedAt": "2023-02-28T14:52:41.453+00:00",
+			"$permissions": ["create(\"any\")", "read(\"any\")", "update(\"any\")", "delete(\"any\")"],
+			"databaseId": "63eec9cedfb0d01be8d2",
+			"name": "text-posts",
+			"enabled": true,
+			"documentSecurity": false,
+			"attributes": [
+				{
+					"key": "restricted",
+					"type": "boolean",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"default": true
+				},
+				{
+					"key": "downvotes",
+					"type": "integer",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"min": 0,
+					"max": 9223372036854775807,
+					"default": 0
+				},
+				{
+					"key": "author",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 64,
+					"default": null
+				},
+				{
+					"key": "title",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 1024,
+					"default": null
+				},
+				{
+					"key": "subreddit",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 64,
+					"default": null
+				},
+				{
+					"key": "upvotes",
+					"type": "integer",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"min": 0,
+					"max": 9223372036854775807,
+					"default": 0
+				},
+				{
+					"key": "description",
+					"type": "string",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"size": 32000,
+					"default": null
+				}
+			],
+			"indexes": [
+				{
+					"key": "index_6",
+					"type": "key",
+					"status": "available",
+					"attributes": ["subreddit", "restricted"],
+					"orders": ["ASC", "ASC"]
+				},
+				{
+					"key": "index_4",
+					"type": "key",
+					"status": "available",
+					"attributes": ["author", "restricted"],
+					"orders": ["ASC", "ASC"]
+				},
+				{
+					"key": "id",
+					"type": "key",
+					"status": "available",
+					"attributes": ["$id"],
+					"orders": ["ASC"]
+				},
+				{
+					"key": "restricted",
+					"type": "key",
+					"status": "available",
+					"attributes": ["restricted"],
+					"orders": ["ASC"]
+				},
+				{
+					"key": "subreddit",
+					"type": "key",
+					"status": "available",
+					"attributes": ["subreddit"],
+					"orders": ["ASC"]
+				},
+				{
+					"key": "index_7",
+					"type": "key",
+					"status": "available",
+					"attributes": ["subreddit", "author", "restricted"],
+					"orders": ["ASC", "ASC", "ASC"]
+				},
+				{
+					"key": "index_5",
+					"type": "key",
+					"status": "available",
+					"attributes": ["$id", "author", "restricted"],
+					"orders": ["ASC", "ASC", "ASC"]
+				}
+			]
+		},
+		{
+			"$id": "63f50f66980067d09649",
+			"$createdAt": "2023-02-28T14:52:47.185+00:00",
+			"$updatedAt": "2023-02-28T14:52:47.185+00:00",
+			"$permissions": ["create(\"any\")", "read(\"any\")", "update(\"any\")", "delete(\"any\")"],
+			"databaseId": "63eec9cedfb0d01be8d2",
+			"name": "comments",
+			"enabled": true,
+			"documentSecurity": false,
+			"attributes": [
+				{
+					"key": "restricted",
+					"type": "boolean",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"default": true
+				},
+				{
+					"key": "upvotes",
+					"type": "integer",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"min": 0,
+					"max": 9223372036854775807,
+					"default": 0
+				},
+				{
+					"key": "author",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 64,
+					"default": null
+				},
+				{
+					"key": "postId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 128,
+					"default": null
+				},
+				{
+					"key": "parentCommentId",
+					"type": "string",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"size": 128,
+					"default": null
+				},
+				{
+					"key": "text",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 32000,
+					"default": null
+				},
+				{
+					"key": "downvotes",
+					"type": "integer",
+					"status": "available",
+					"required": false,
+					"array": false,
+					"min": 0,
+					"max": 9223372036854775807,
+					"default": 0
+				}
+			],
+			"indexes": [
+				{
+					"key": "postId",
+					"type": "key",
+					"status": "available",
+					"attributes": ["postId"],
+					"orders": ["ASC"]
+				}
+			]
+		},
+		{
+			"$id": "63fe16124ca837706abe",
+			"$createdAt": "2023-02-28T14:56:18.315+00:00",
+			"$updatedAt": "2023-03-01T09:23:27.921+00:00",
+			"$permissions": ["create(\"any\")", "read(\"any\")", "update(\"any\")", "delete(\"any\")"],
+			"databaseId": "63eec9cedfb0d01be8d2",
+			"name": "votes",
+			"enabled": true,
+			"documentSecurity": false,
+			"attributes": [
+				{
+					"key": "direction",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"elements": ["UP", "DOWN", "NONE"],
+					"format": "enum",
+					"default": null
+				},
+				{
+					"key": "parentId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 128,
+					"default": null
+				},
+				{
+					"key": "parentType",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"elements": ["POST", "COMMENT"],
+					"format": "enum",
+					"default": null
+				},
+				{
+					"key": "author",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 128,
+					"default": null
+				}
+			],
+			"indexes": [
+				{
+					"key": "index_1",
+					"type": "key",
+					"status": "available",
+					"attributes": ["author"],
+					"orders": ["ASC"]
+				},
+				{
+					"key": "index_2",
+					"type": "key",
+					"status": "available",
+					"attributes": ["author", "parentId"],
+					"orders": ["ASC", "ASC"]
+				},
+				{
+					"key": "index_3",
+					"type": "key",
+					"status": "available",
+					"attributes": ["parentId"],
+					"orders": ["ASC"]
+				}
+			]
+		}
+	],
+	"functions": [
+		{
+			"$id": "63fe188e4893f34dab48",
+			"events": [
+				"databases.*.collections.63fe16124ca837706abe.documents.*.create",
+				"databases.*.collections.63fe16124ca837706abe.documents.*.update",
+				"databases.*.collections.63fe16124ca837706abe.documents.*.delete"
+			],
+			"name": "vote-handler",
+			"runtime": "node-16.0",
+			"schedule": "",
+			"timeout": 15,
+			"path": "functions/vote-handler",
+			"entrypoint": "src/index.js"
+		}
+	]
 }

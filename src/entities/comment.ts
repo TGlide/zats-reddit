@@ -14,6 +14,10 @@ export const commentSchema = z.object({
 
 export type Comment = z.infer<typeof commentSchema>;
 
+export function isComment(obj: unknown): obj is Comment {
+	return commentSchema.safeParse(obj).success;
+}
+
 export type CommentTreeItem = Omit<Comment, 'parentCommentId'> & {
 	children?: CommentTreeItem[];
 };

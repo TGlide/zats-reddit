@@ -27,6 +27,7 @@ export function createZodFunctionHandler<
 
 	return {
 		parse,
+		schema,
 		fn
 	};
 }

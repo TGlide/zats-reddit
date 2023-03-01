@@ -38,21 +38,28 @@ module.exports = async function (req, res) {
 			.setSelfSigned(true);
 	}
 
-	const { DB_ID, TEXT_POSTS_COLLECTION_ID, VOTES_COLLECTION_ID } = req.variables;
-	const { postId } = JSON.parse(req.variables['APPWRITE_FUNCTION_EVENT_DATA']);
+	const { DB_ID, TEXT_POSTS_COLLECTION_ID, VOTES_COLLECTION_ID, COMMENTS_COLLECTION_ID } =
+		req.variables;
+	const { parentId, parentType } = JSON.parse(req.variables['APPWRITE_FUNCTION_EVENT_DATA']);
 
-	// Get post document
-	const postVotes = await database.listDocuments(DB_ID, VOTES_COLLECTION_ID, [
-		sdk.Query.equal('postId', postId)
+	console.log('hey');
+	const parentVotes = await database.listDocuments(DB_ID, VOTES_COLLECTION_ID, [
+		sdk.Query.equal('parentId', parentId)
 	]);
-	const upvotes = postVotes.documents.reduce((acc, vote) => {
+	console.log(parentVotes.total);
+	const upvotes = parentVotes.documents.reduce((acc, vote) => {
 		return vote.direction === 'UP' ? acc + 1 : acc;
 	}, 0);
-	const downvotes = postVotes.documents.reduce((acc, vote) => {
+	const downvotes = parentVotes.documents.reduce((acc, vote) => {
 		return vote.direction === 'DOWN' ? acc + 1 : acc;
 	}, 0);
 
-	await database.updateDocument(DB_ID, TEXT_POSTS_COLLECTION_ID, postId, { upvotes, downvotes });
+	const collectionId = parentType === 'POST' ? TEXT_POSTS_COLLECTION_ID : COMMENTS_COLLECTION_ID;
+	console.log({ parentId, collectionId });
+	await database.updateDocument(DB_ID, collectionId, parentId, {
+		upvotes,
+		downvotes
+	});
 
 	res.json({
 		ok: true

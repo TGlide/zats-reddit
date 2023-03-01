@@ -7,10 +7,10 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 
 	const votes = await getVotes({ author: user });
 	const upvotes = votes.reduce((acc, vote) => {
-		return vote.direction === 'UP' ? [...acc, vote.postId] : acc;
+		return vote.direction === 'UP' ? [...acc, vote.parentId] : acc;
 	}, [] as string[]);
 	const downvotes = votes.reduce((acc, vote) => {
-		return vote.direction === 'DOWN' ? [...acc, vote.postId] : acc;
+		return vote.direction === 'DOWN' ? [...acc, vote.parentId] : acc;
 	}, [] as string[]);
 
 	return { user, upvotes, downvotes };
