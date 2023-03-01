@@ -280,6 +280,9 @@ module.exports = {
 			borderRadius: {
 				xs: '0.125rem',
 				sm: '0.25rem'
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif']
 			}
 		}
 	},

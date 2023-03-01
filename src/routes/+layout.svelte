@@ -1,7 +1,16 @@
 <script lang="ts">
+	// Styles
+	import '@fontsource/inter/300.css';
+	import '@fontsource/inter/400.css';
+	import '@fontsource/inter/500.css';
+	import '@fontsource/inter/600.css';
+	import '@fontsource/inter/700.css';
+	import '@fontsource/inter/800.css';
+	import '@fontsource/inter/900.css';
+	import '$styles/index.css';
+	// JS
 	import { page } from '$app/stores';
 	import { Filter } from '$entities/filter';
-	import '$styles/index.css';
 	import { user, filter } from './stores';
 
 	function getHref(path: string, subreddit?: string) {

@@ -16,7 +16,7 @@
 				{expanded ? '-' : '+'}
 			</span>]
 		</button>
-		<span class="font-semibold">{comment.author}</span>
+		<span class="font-semibold text-gray-11">{comment.author}</span>
 	</div>
 	<div class:hidden={!expanded}>
 		<p>
@@ -35,19 +35,22 @@
 			{/if} -->
 		</div>
 		{#if replying}
-			<form class="mt-2 flex flex-col items-start" method="post" action="?/reply">
+			<form class="mt-2 flex w-full flex-col  items-start lg:w-1/2" method="post" action="?/reply">
 				<input type="hidden" name="postId" value={postId} />
 				<input type="hidden" name="parentCommentId" value={comment.$id} />
 				<textarea
 					name="text"
-					class="h-24 w-full rounded-md border border-solid border-gray-5/50 px-2 py-1 lg:w-1/2"
+					class="h-24 w-full rounded-md border border-solid border-gray-5/50 px-2 py-1"
 					placeholder="Add a comment..."
 				/>
-				<div class="mt-2 flex gap-2">
-					<button class="btn" type="submit">Comment</button>
-					<button class="btn-outline" on:click|preventDefault={() => (replying = false)}>
+				<div class="mt-2 grid w-full grid-cols-12 gap-2 lg:block lg:w-auto">
+					<button
+						class="btn is-outline is-small col-span-3"
+						on:click|preventDefault={() => (replying = false)}
+					>
 						Cancel
 					</button>
+					<button class="btn is-small col-span-9" type="submit">Comment</button>
 				</div>
 			</form>
 		{/if}

@@ -21,7 +21,7 @@
 		class="h-24 w-full rounded-md border border-solid border-gray-5/50 px-2 py-1 lg:w-1/2"
 		placeholder="Add a comment..."
 	/>
-	<button class="btn mt-2 text-white">Comment</button>
+	<button class="btn mt-2">Comment</button>
 </form>
 
 <div class="mt-8 flex flex-col gap-4">

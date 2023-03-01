@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer components {
+	/* Input */
 	.input {
 		border: 1px solid theme('colors.gray.4');
 		border-radius: theme('borderRadius.md');
@@ -24,6 +25,7 @@
 		color: theme('colors.red.8');
 	}
 
+	/* Button */
 	.btn {
 		border-radius: theme('borderRadius.md');
 		background-color: theme('colors.blue.5');
@@ -41,20 +43,28 @@
 		background-color: theme('colors.blue.7');
 	}
 
-	.btn-outline {
-		@apply btn;
-		background-color: transparent;
+	.btn.is-outline {
 		border: 1px solid theme('colors.blue.5');
 		color: theme('colors.blue.5');
 	}
 
-	.btn-outline:hover {
+	.btn.is-outline:not(:hover) {
+		background-color: theme('colors.white');
+	}
+
+	.btn.is-outline:hover {
 		color: theme('colors.white');
 		border-color: theme('colors.blue.6');
 	}
 
-	.btn-outline:focus {
+	.btn.is-outline:focus {
 		border-color: theme('colors.blue.7');
+	}
+
+	.btn.is-small {
+		padding-block: theme('spacing.1');
+		padding-inline: theme('spacing.2');
+		font-size: theme('fontSize.xs');
 	}
 }
 

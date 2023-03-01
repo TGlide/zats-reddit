@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@fontsource/inter': ^4.5.15
   '@playwright/test': ^1.28.1
   '@sveltejs/adapter-auto': ^2.0.0
   '@sveltejs/kit': ^1.8.3
@@ -33,6 +34,7 @@ specifiers:
   zod: ^3.20.6
 
 dependencies:
+  '@fontsource/inter': 4.5.15
   appwrite: 10.2.0
   uuid: 9.0.0
   zod: 3.20.6
@@ -289,6 +291,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fontsource/inter/4.5.15:
+    resolution: {integrity: sha512-FzleM9AxZQK2nqsTDtBiY0PMEVWvnKnuu2i09+p6DHvrHsuucoV2j0tmw+kAT3L4hvsLdAIDv6MdGehsPIdT+Q==}
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
