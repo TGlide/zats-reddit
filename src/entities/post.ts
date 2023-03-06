@@ -12,7 +12,7 @@ export const postSchema = documentSchema.extend({
 	restricted: z.boolean().nullable()
 });
 
-export type Post = z.infer<typeof postSchema> & { comments: number };
+export type Post = z.infer<typeof postSchema> & { numComments: number };
 export type ExpandedPost = Post & { commentTree: CommentTree };
 
 export function isPost(obj: unknown): obj is Post {

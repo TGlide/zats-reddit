@@ -4,24 +4,40 @@ import { databases } from '$lib/appwrite.server';
 import { Query } from 'appwrite';
 import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
-import { buildCommentTree, commentSchema } from './comment';
+import { buildCommentTree, commentSchema, type Comment } from './comment';
 
-export async function getComments(postId: string) {
-	const comments = await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
-		Query.equal('postId', postId)
+type GetCommentsArgs = {
+	postId: string;
+	author?: string;
+};
+
+export async function getComments(args: GetCommentsArgs) {
+	const promises = await Promise.all([
+		await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
+			Query.equal('postId', args.postId),
+			Query.notEqual('restricted', true)
+		]),
+		args.author
+			? await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
+					Query.equal('postId', args.postId),
+					Query.equal('author', args.author),
+					Query.equal('restricted', true)
+			  ])
+			: undefined
 	]);
 
-	const { documents, total } = documentsListSchema(commentSchema).parse(comments);
-	return { commentTree: buildCommentTree(documents), comments: total };
-}
+	const documents: Comment[] = [];
+	let total = 0;
 
-export async function getNumComments(postId: string) {
-	const comments = await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
-		Query.equal('postId', postId)
-	]);
+	promises.forEach((promise) => {
+		const result = documentsListSchema(commentSchema).safeParse(promise);
+		if (!result.success) return;
 
-	const { total } = documentsListSchema(commentSchema).parse(comments);
-	return total;
+		documents.push(...result.data.documents);
+		total += result.data.total;
+	});
+
+	return { commentTree: buildCommentTree(documents), total };
 }
 
 type PostCommentArgs = {

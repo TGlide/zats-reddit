@@ -4,7 +4,7 @@ import { databases } from '$lib/appwrite.server';
 import { Query } from 'appwrite';
 import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
-import { getComments, getNumComments } from './comment.server';
+import { getComments } from './comment.server';
 import { postSchema, type ExpandedPost, type Post } from './post';
 
 type GetPostsArgs = {
@@ -37,8 +37,8 @@ export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
 
 	const postsWithNumComments: Post[] = await Promise.all(
 		allDocs.map(async (post) => {
-			const numComments = await getNumComments(post.$id);
-			return { ...post, comments: numComments };
+			const comments = await getComments({ postId: post.$id, author: args?.author });
+			return { ...post, numComments: comments.total };
 		})
 	);
 
@@ -63,12 +63,12 @@ export async function getPost(args: GetPostArgs): Promise<ExpandedPost> {
 			throw new Error('Unauthorized');
 		}
 
-		const { commentTree, comments } = await getComments(args.postId);
+		const { commentTree, total } = await getComments({ ...args });
 
 		return {
 			...parsedPost,
 			commentTree,
-			comments
+			numComments: total
 		};
 	} catch (e) {
 		console.error(e);
