@@ -18,3 +18,11 @@ export type ExpandedPost = Post & { commentTree: CommentTree };
 export function isPost(obj: unknown): obj is Post {
 	return postSchema.safeParse(obj).success;
 }
+
+export function postScore(post: Post) {
+	return post.upvotes - post.downvotes;
+}
+
+export function postRatio(post: Post) {
+	return post.upvotes / (post.upvotes + post.downvotes);
+}

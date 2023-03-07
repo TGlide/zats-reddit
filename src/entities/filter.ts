@@ -1,8 +1,6 @@
 export enum Filter {
-	Best = 'best',
 	Hot = 'hot',
 	New = 'new',
-	Rising = 'rising',
 	Controversial = 'controversial'
 }
 

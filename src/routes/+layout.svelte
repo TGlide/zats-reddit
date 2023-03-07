@@ -23,10 +23,8 @@
 	};
 
 	$: paths = [
-		{ href: getHref('/', $subreddit), name: Filter.Best },
-		{ href: getHref('/hot', $subreddit), name: Filter.Hot },
+		{ href: getHref('/', $subreddit), name: Filter.Hot },
 		{ href: getHref('/new', $subreddit), name: Filter.New },
-		{ href: getHref('/rising', $subreddit), name: Filter.Rising },
 		{ href: getHref('/controversial', $subreddit), name: Filter.Controversial }
 	] satisfies Path[];
 

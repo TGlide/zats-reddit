@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Posts from '$routes/posts.svelte';
 	import { filter } from '$routes/stores';
 	import type { PageData } from './$types';

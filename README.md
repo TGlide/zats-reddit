@@ -34,25 +34,26 @@ It is also a experiment on using Zod for validation in a SvelteKit + Appwrite ap
 
 ### Requirements
 
-- [ ] Link Posts
-- [ ] Image/Video posts
-- [ ] Post filter logic
-- [ ] Comment filter logic
+- [x] Post filter logic
 - [x] Responsiveness
 - [x] Votes on comments
 - [x] Implement votes functionality (upvote/downvote)
 - [x] Create comments
 - [x] Session
 
-### Nice-to-haves
+### Niceties
 
 - [ ] Make sure no duplicate accounts are created
 - [ ] Post deletion function
 - [ ] Comment deletion function
 - [ ] Delete stuff after 24 hours
 - [ ] 404 page
-- [ ] Favicon
 - [ ] Review code organization
 - [ ] Review progressive enhancement
+- [ ] Link Posts
+- [ ] Image/Video posts
+- [ ] Comment filter logic
+- [ ] Loading states
+- [x] Favicon
 - [x] Pretty readme
 - [x] Change fonts

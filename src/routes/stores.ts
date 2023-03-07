@@ -1,10 +1,9 @@
-import { browser } from '$app/environment';
 import { page } from '$app/stores';
 import { Filter } from '$entities/filter';
-import { derived, get, writable } from 'svelte/store';
+import { derived } from 'svelte/store';
 
 export const filter = derived(page, ($page) => {
-	return $page.params.filter ?? Filter.Best;
+	return ($page.params.filter ?? Filter.Hot) as Filter;
 });
 
 export const user = derived(page, ($page) => {
