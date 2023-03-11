@@ -27,8 +27,8 @@ It is also a experiment on using Zod for validation in a SvelteKit + Appwrite ap
 ### Details
 
 - You can only see admin-created or self-created posts and comments, to avoid need for moderation.
-- Authentication is ephemeral, meaning you can create a randomly-generated username, which will be used for the duration of the session.
-- All user-generated posts are deleted after at least 24 hours.
+- Authentication is ephemeral, meaning you are automatically signed up with a randomly-generated username, which will be used for the duration of the session.
+- TODO: All users & user-generated contents are deleted after at least 24 hours.
 
 ## TODO
 
