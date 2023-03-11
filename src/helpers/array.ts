@@ -21,3 +21,15 @@ export function multiSort<T>(array: T[], sorters: ((a: T, b: T) => number)[]): T
 		return 0;
 	});
 }
+
+type Truthy<T> = T extends false | 0 | '' | null | undefined ? never : T;
+
+export function truthyArray<T>(array: T[]): Truthy<T>[] {
+	return array.filter(Boolean) as Truthy<T>[];
+}
+
+export function uniqueByKey<T>(array: T[], key: keyof T): T[] {
+	return array.filter((item, index, self) => {
+		return self.findIndex((t) => t[key] === item[key]) === index;
+	});
+}

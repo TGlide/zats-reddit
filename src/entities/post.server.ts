@@ -1,4 +1,9 @@
-import { APPWRITE_COLLECTION_TEXT_POSTS, APPWRITE_DB } from '$env/static/private';
+import {
+	APPWRITE_ADMIN_MODE,
+	APPWRITE_COLLECTION_TEXT_POSTS,
+	APPWRITE_DB
+} from '$env/static/private';
+import { truthyArray, uniqueByKey } from '$helpers/array';
 import { createZodFunctionHandler } from '$helpers/zod';
 import { databases } from '$lib/appwrite.server';
 import { Query } from 'appwrite';
@@ -14,27 +19,38 @@ type GetPostsArgs = {
 };
 
 export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
-	const userPostsPromise = args?.authorId
-		? databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_TEXT_POSTS, [
-				...(args?.subreddit ? [Query.equal('subreddit', args?.subreddit)] : []),
-				Query.equal('authorId', args.authorId),
-				Query.equal('restricted', true)
-		  ])
-		: undefined;
-
-	const adminPostsPromise = databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_TEXT_POSTS, [
-		...(args?.subreddit ? [Query.equal('subreddit', args?.subreddit)] : []),
-		Query.notEqual('restricted', true)
+	const promises = await Promise.all([
+		args?.authorId
+			? databases.listDocuments(
+					APPWRITE_DB,
+					APPWRITE_COLLECTION_TEXT_POSTS,
+					truthyArray([
+						args?.subreddit && Query.equal('subreddit', args?.subreddit),
+						Query.equal('authorId', args.authorId),
+						Query.equal('restricted', true)
+					])
+			  )
+			: undefined,
+		databases.listDocuments(
+			APPWRITE_DB,
+			APPWRITE_COLLECTION_TEXT_POSTS,
+			truthyArray([
+				args?.subreddit && Query.equal('subreddit', args?.subreddit),
+				!APPWRITE_ADMIN_MODE && Query.notEqual('restricted', true)
+			])
+		)
 	]);
 
-	const [userPosts, adminPosts] = await Promise.all([userPostsPromise, adminPostsPromise]);
+	const documents: z.infer<typeof postSchema>[] = [];
 
-	const userPostsDocsList = userPosts
-		? documentsListSchema(postSchema).parse(userPosts)
-		: { documents: [] };
-	const adminPostsDocsList = documentsListSchema(postSchema).parse(adminPosts);
+	promises.forEach((promise) => {
+		const result = documentsListSchema(postSchema).safeParse(promise);
+		if (!result.success) return;
 
-	const allDocs = [...userPostsDocsList.documents, ...adminPostsDocsList.documents];
+		documents.push(...result.data.documents);
+	});
+
+	const allDocs = uniqueByKey(documents, '$id');
 
 	const postsWithNumComments: Post[] = await Promise.all(
 		allDocs.map(async (post) => {
@@ -61,7 +77,7 @@ export async function getPost(args: GetPostArgs): Promise<ExpandedPost> {
 		);
 		const parsedPost = documentSchema.extend(postSchema.shape).parse(post);
 
-		if (parsedPost.restricted && parsedPost.authorId !== args.authorId) {
+		if (parsedPost.restricted && parsedPost.authorId !== args.authorId && !APPWRITE_ADMIN_MODE) {
 			throw new Error('Unauthorized');
 		}
 

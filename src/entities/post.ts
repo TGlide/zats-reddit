@@ -9,10 +9,12 @@ export const postSchema = documentSchema.extend({
 	subreddit: z.string(),
 	authorId: z.string(),
 	description: z.string().nullable(),
-	restricted: z.boolean().nullable()
+	restricted: z.boolean().nullable(),
+	numComments: z.number().nullable().optional(),
+	authorName: z.string().nullable().optional()
 });
 
-export type Post = z.infer<typeof postSchema> & { numComments: number; authorName?: string };
+export type Post = z.infer<typeof postSchema>;
 export type ExpandedPost = Post & { commentTree: CommentTree };
 
 export function isPost(obj: unknown): obj is Post {

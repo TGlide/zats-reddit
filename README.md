@@ -53,7 +53,8 @@ It is also a experiment on using Zod for validation in a SvelteKit + Appwrite ap
 - [ ] Link Posts
 - [ ] Image/Video posts
 - [ ] Comment filter logic
-- [ ] Loading states
+- [ ] Admin mode features (delete, change votes, etc.)
+- [x] Loading states
 - [x] Favicon
 - [x] Pretty readme
 - [x] Change fonts

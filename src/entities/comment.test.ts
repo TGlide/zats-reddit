@@ -12,7 +12,11 @@ describe('Comment', () => {
 				$createdAt: '',
 				$id: 'a',
 				postId: '',
-				parentCommentId: null
+				parentCommentId: null,
+				$collectionId: '',
+				$permissions: [],
+				$databaseId: '',
+				$updatedAt: ''
 			},
 			{
 				text: 'Text',
@@ -22,7 +26,11 @@ describe('Comment', () => {
 				$createdAt: '',
 				$id: 'a-a',
 				postId: '',
-				parentCommentId: 'a'
+				parentCommentId: 'a',
+				$collectionId: '',
+				$permissions: [],
+				$databaseId: '',
+				$updatedAt: ''
 			},
 			{
 				text: 'Text',
@@ -32,7 +40,11 @@ describe('Comment', () => {
 				$createdAt: '',
 				$id: 'a-b',
 				postId: '',
-				parentCommentId: 'a'
+				parentCommentId: 'a',
+				$collectionId: '',
+				$permissions: [],
+				$databaseId: '',
+				$updatedAt: ''
 			},
 			{
 				text: 'Text',
@@ -42,7 +54,11 @@ describe('Comment', () => {
 				$createdAt: '',
 				$id: 'a-b-a',
 				postId: '',
-				parentCommentId: 'a-b'
+				parentCommentId: 'a-b',
+				$collectionId: '',
+				$permissions: [],
+				$databaseId: '',
+				$updatedAt: ''
 			}
 		];
 
@@ -57,6 +73,10 @@ describe('Comment', () => {
 				$createdAt: '',
 				$id: 'a',
 				postId: '',
+				$collectionId: '',
+				$permissions: [],
+				$databaseId: '',
+				$updatedAt: '',
 				children: [
 					{
 						text: 'Text',
@@ -65,7 +85,11 @@ describe('Comment', () => {
 						authorId: 'Author',
 						$createdAt: '',
 						$id: 'a-a',
-						postId: ''
+						postId: '',
+						$collectionId: '',
+						$permissions: [],
+						$databaseId: '',
+						$updatedAt: ''
 					},
 					{
 						text: 'Text',
@@ -75,6 +99,10 @@ describe('Comment', () => {
 						$createdAt: '',
 						$id: 'a-b',
 						postId: '',
+						$collectionId: '',
+						$permissions: [],
+						$databaseId: '',
+						$updatedAt: '',
 						children: [
 							{
 								text: 'Text',
@@ -83,7 +111,11 @@ describe('Comment', () => {
 								authorId: 'Author',
 								$createdAt: '',
 								$id: 'a-b-a',
-								postId: ''
+								postId: '',
+								$collectionId: '',
+								$permissions: [],
+								$databaseId: '',
+								$updatedAt: ''
 							}
 						]
 					}

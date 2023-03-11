@@ -1,14 +1,13 @@
 import { omit } from '$helpers/object';
 import { z } from 'zod';
+import { documentSchema } from './appwrite';
 
-export const commentSchema = z.object({
+export const commentSchema = documentSchema.extend({
 	text: z.string(),
 	upvotes: z.number(),
 	downvotes: z.number(),
 	authorId: z.string(),
 	authorName: z.string().nullable().optional(),
-	$createdAt: z.string(),
-	$id: z.string(),
 	postId: z.string(),
 	parentCommentId: z.string().nullable()
 });

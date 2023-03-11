@@ -1,4 +1,9 @@
-import { APPWRITE_COLLECTION_COMMENTS, APPWRITE_DB } from '$env/static/private';
+import {
+	APPWRITE_ADMIN_MODE,
+	APPWRITE_COLLECTION_COMMENTS,
+	APPWRITE_DB
+} from '$env/static/private';
+import { truthyArray } from '$helpers/array';
 import { createZodFunctionHandler } from '$helpers/zod';
 import { databases } from '$lib/appwrite.server';
 import { Query } from 'appwrite';
@@ -14,10 +19,14 @@ type GetCommentsArgs = {
 
 export async function getComments(args: GetCommentsArgs) {
 	const promises = await Promise.all([
-		await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
-			Query.equal('postId', args.postId),
-			Query.notEqual('restricted', true)
-		]),
+		await databases.listDocuments(
+			APPWRITE_DB,
+			APPWRITE_COLLECTION_COMMENTS,
+			truthyArray([
+				Query.equal('postId', args.postId),
+				!APPWRITE_ADMIN_MODE && Query.notEqual('restricted', true)
+			])
+		),
 		args.authorId
 			? await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
 					Query.equal('postId', args.postId),
