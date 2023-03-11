@@ -34,7 +34,7 @@
 </script>
 
 <ul class="flex flex-col gap-4">
-	{#each sortedPosts as post, index}
+	{#each sortedPosts as post, index (post.$id)}
 		<li class="flex items-center gap-4">
 			<span class="block w-2 text-lg text-gray-6">
 				{index + 1}
