@@ -11,7 +11,6 @@ import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
 import { getComments } from './comment.server';
 import { postSchema, type ExpandedPost, type Post } from './post';
-import { getUser } from './user.server';
 
 type GetPostsArgs = {
 	subreddit?: string;
@@ -41,26 +40,14 @@ export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
 		)
 	]);
 
-	const documents: z.infer<typeof postSchema>[] = [];
-
-	promises.forEach((promise) => {
+	const documents = promises.reduce<z.infer<typeof postSchema>[]>((acc, promise) => {
 		const result = documentsListSchema(postSchema).safeParse(promise);
-		if (!result.success) return;
+		if (!result.success) return acc;
 
-		documents.push(...result.data.documents);
-	});
+		return [...acc, ...result.data.documents];
+	}, []);
 
-	const allDocs = uniqueByKey(documents, '$id');
-
-	const postsWithNumComments: Post[] = await Promise.all(
-		allDocs.map(async (post) => {
-			const comments = await getComments({ postId: post.$id, authorId: args?.authorId });
-			const authorName = await getUser({ uuid: post.authorId }).then((user) => user?.name);
-			return { ...post, numComments: comments.total, authorName };
-		})
-	);
-
-	return postsWithNumComments;
+	return uniqueByKey(documents, '$id');
 }
 
 type GetPostArgs = {
@@ -81,14 +68,11 @@ export async function getPost(args: GetPostArgs): Promise<ExpandedPost> {
 			throw new Error('Unauthorized');
 		}
 
-		const { commentTree, total } = await getComments({ ...args });
-		const authorName = await getUser({ uuid: parsedPost.authorId }).then((user) => user?.name);
+		const commentTree = await getComments({ ...args });
 
 		return {
 			...parsedPost,
-			commentTree,
-			numComments: total,
-			authorName
+			commentTree
 		};
 	} catch (e) {
 		console.error(e);
@@ -101,7 +85,8 @@ export const createPostHandler = createZodFunctionHandler(
 		title: z.string().trim().min(1),
 		subreddit: z.string().trim().min(1),
 		description: z.string().optional(),
-		authorId: z.string().trim().min(1)
+		authorId: z.string().trim().min(1),
+		authorName: z.string().trim().min(1)
 	}),
 	async (args) => {
 		return await databases.createDocument(APPWRITE_DB, APPWRITE_COLLECTION_TEXT_POSTS, 'unique()', {

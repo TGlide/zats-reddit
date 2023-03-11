@@ -18,7 +18,7 @@
 				{expanded ? '-' : '+'}
 			</span>]
 		</button>
-		<span class="font-semibold text-gray-11">{comment.authorName}</span>
+		<span class="font-semibold text-gray-11">{comment.authorName ?? 'unknown author'}</span>
 	</div>
 	<div class:hidden={!expanded}>
 		<p>

@@ -22,7 +22,11 @@ export const actions: Actions = {
 	async reply({ request, cookies }) {
 		const user = await getUserSession(cookies);
 		const data = await getFormDataObj(request);
-		const result = createCommentHandler.parse({ ...data, authorId: user.uuid });
+		const result = createCommentHandler.parse({
+			...data,
+			authorId: user.uuid,
+			authorName: user.name
+		});
 
 		if (result.success) {
 			const comment = await result.execute();

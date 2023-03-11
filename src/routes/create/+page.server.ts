@@ -9,7 +9,7 @@ export const actions = {
 	default: async ({ request, cookies }) => {
 		const user = await getUserSession(cookies);
 		const data = await getFormDataObj(request);
-		const result = createPostHandler.parse({ ...data, authorId: user.uuid });
+		const result = createPostHandler.parse({ ...data, authorId: user.uuid, authorName: user.name });
 
 		if (result.success) {
 			const post = await result.execute();

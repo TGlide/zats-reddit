@@ -10,7 +10,6 @@ import { Query } from 'appwrite';
 import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
 import { buildCommentTree, commentSchema, type Comment } from './comment';
-import { getUser } from './user.server';
 
 type GetCommentsArgs = {
 	postId: string;
@@ -36,25 +35,13 @@ export async function getComments(args: GetCommentsArgs) {
 			: undefined
 	]);
 
-	const documents: Comment[] = [];
-	let total = 0;
-
-	promises.forEach((promise) => {
+	const documents: Comment[] = promises.reduce<Comment[]>((acc, promise) => {
 		const result = documentsListSchema(commentSchema).safeParse(promise);
-		if (!result.success) return;
+		if (!result.success) return acc;
+		return [...acc, ...result.data.documents];
+	}, []);
 
-		documents.push(...result.data.documents);
-		total += result.data.total;
-	});
-
-	const documentsWithAuthorName = await Promise.all(
-		documents.map(async (comment) => {
-			const authorName = await getUser({ uuid: comment.authorId }).then((user) => user?.name);
-			return { ...comment, authorName };
-		})
-	);
-
-	return { commentTree: buildCommentTree(documentsWithAuthorName), total };
+	return buildCommentTree(documents);
 }
 
 type PostCommentArgs = {
@@ -84,7 +71,8 @@ export const createCommentHandler = createZodFunctionHandler(
 		text: z.string().trim().min(1),
 		postId: z.string(),
 		parentCommentId: z.string().optional(),
-		authorId: z.string().trim().min(1)
+		authorId: z.string().trim().min(1),
+		authorName: z.string().trim().min(1)
 	}),
 	async (args) => {
 		return await databases.createDocument(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, 'unique()', {

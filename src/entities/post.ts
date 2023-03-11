@@ -10,8 +10,8 @@ export const postSchema = documentSchema.extend({
 	authorId: z.string(),
 	description: z.string().nullable(),
 	restricted: z.boolean().nullable(),
-	numComments: z.number().nullable().optional(),
-	authorName: z.string().nullable().optional()
+	numComments: z.number().nullable(),
+	authorName: z.string().nullable()
 });
 
 export type Post = z.infer<typeof postSchema>;

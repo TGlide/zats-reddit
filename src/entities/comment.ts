@@ -7,7 +7,7 @@ export const commentSchema = documentSchema.extend({
 	upvotes: z.number(),
 	downvotes: z.number(),
 	authorId: z.string(),
-	authorName: z.string().nullable().optional(),
+	authorName: z.string().nullable(),
 	postId: z.string(),
 	parentCommentId: z.string().nullable()
 });
