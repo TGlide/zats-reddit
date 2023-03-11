@@ -63,3 +63,7 @@ export function buildCommentTree(comments: Comment[]) {
 
 	return Object.values(commentMap);
 }
+
+export function commentScore(comment: Comment | CommentTreeItem) {
+	return comment.upvotes - comment.downvotes;
+}

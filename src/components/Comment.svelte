@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CommentTreeItem } from '$entities/comment';
+	import { commentScore, type CommentTreeItem } from '$entities/comment';
 	import Votes from './Votes.svelte';
 
 	export let comment: CommentTreeItem;
@@ -7,6 +7,8 @@
 
 	let expanded = true;
 	let replying = false;
+
+	$: sortedChildren = comment.children?.sort((a, b) => commentScore(b) - commentScore(a));
 </script>
 
 <div class={`border-l border-solid border-gray-4 pl-2 text-sm `}>
@@ -54,7 +56,7 @@
 				</div>
 			</form>
 		{/if}
-		{#each comment?.children ?? [] as child}
+		{#each sortedChildren ?? [] as child}
 			<div class="pl-1 pt-2 ">
 				<svelte:self comment={child} {postId} />
 			</div>

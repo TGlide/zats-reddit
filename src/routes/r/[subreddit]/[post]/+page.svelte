@@ -1,11 +1,14 @@
 <script lang="ts">
 	import Comment from '$components/Comment.svelte';
 	import PostThumb from '$components/PostThumb.svelte';
+	import { commentScore } from '$entities/comment';
 	import { subreddit } from '$routes/stores';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	const post = data.post;
+
+	$: sortedCommentTree = post.commentTree.sort((a, b) => commentScore(b) - commentScore(a));
 </script>
 
 <svelte:head>
