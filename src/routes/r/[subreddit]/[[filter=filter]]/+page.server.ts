@@ -1,8 +1,7 @@
 import { getPosts } from '$entities/post.server';
-import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, parent }) => {
-	const { user } = await parent();
+export const load = async ({ params, locals }) => {
+	const user = locals.user;
 	const posts = await getPosts({ subreddit: params.subreddit, authorId: user.uuid });
 	return { posts };
 };

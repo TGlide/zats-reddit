@@ -3,9 +3,8 @@
 	import PostThumb from '$components/PostThumb.svelte';
 	import { commentScore } from '$entities/comment';
 	import { subreddit } from '$routes/stores';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
+	export let data;
 	const post = data.post;
 
 	$: sortedCommentTree = post.commentTree.sort((a, b) => commentScore(b) - commentScore(a));
@@ -36,7 +35,7 @@
 	{#if post.commentTree.length === 0}
 		<p class="text-gray-9">No comments yet</p>
 	{/if}
-	{#each post.commentTree as comment}
+	{#each sortedCommentTree as comment}
 		<Comment {comment} postId={post.$id} />
 	{/each}
 </div>

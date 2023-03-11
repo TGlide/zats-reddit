@@ -1,10 +1,7 @@
-import { getUserSession } from '$entities/user.server';
 import { getVotes } from '$entities/vote.server';
 
-import type { LayoutServerLoad } from './$types';
-
-export const load: LayoutServerLoad = async ({ cookies }) => {
-	const user = await getUserSession(cookies);
+export const load = async ({ locals }) => {
+	const user = locals.user;
 
 	const votes = await getVotes({ authorId: user.uuid });
 	const upvotes = votes.reduce((acc, vote) => {

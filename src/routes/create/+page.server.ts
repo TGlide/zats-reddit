@@ -1,13 +1,11 @@
 import { createPostHandler } from '$entities/post.server';
-import { getUserSession } from '$entities/user.server';
 import { getFormDataObj } from '$helpers/form';
 
 import { redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
 
 export const actions = {
-	default: async ({ request, cookies }) => {
-		const user = await getUserSession(cookies);
+	default: async ({ request, cookies, locals }) => {
+		const user = locals.user;
 		const data = await getFormDataObj(request);
 		const result = createPostHandler.parse({ ...data, authorId: user.uuid, authorName: user.name });
 
@@ -20,4 +18,4 @@ export const actions = {
 			};
 		}
 	}
-} satisfies Actions;
+};

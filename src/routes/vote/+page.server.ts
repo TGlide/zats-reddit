@@ -2,13 +2,12 @@ import { voteHandler } from '$entities/vote.server';
 import { getFormDataObj } from '$helpers/form';
 
 import { error, redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
+
 import type { Action } from '@sveltejs/kit';
-import { getUserSession } from '$entities/user.server';
 
 function createVoteAction(direction: 'UP' | 'DOWN' | 'NONE') {
-	return (async ({ request, cookies }) => {
-		const user = await getUserSession(cookies);
+	return (async ({ request, locals }) => {
+		const user = locals.user;
 		const data = await getFormDataObj(request);
 		const result = voteHandler.parse({ ...data, authorId: user.uuid, direction });
 
@@ -22,7 +21,7 @@ function createVoteAction(direction: 'UP' | 'DOWN' | 'NONE') {
 	}) satisfies Action;
 }
 
-export const actions: Actions = {
+export const actions = {
 	upvote: createVoteAction('UP'),
 	downvote: createVoteAction('DOWN'),
 	nonevote: createVoteAction('NONE')
