@@ -45,7 +45,36 @@ function getRandomUsername() {
 		'worried'
 	];
 
-	const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'teal', 'pink', 'cyan'];
+	const colors = [
+		'red',
+		'green',
+		'blue',
+		'yellow',
+		'purple',
+		'orange',
+		'teal',
+		'pink',
+		'cyan',
+		'magenta',
+		'lime',
+		'brown',
+		'beige',
+		'maroon',
+		'mint',
+		'olive',
+		'coral',
+		'navy',
+		'grey',
+		'silver',
+		'diamond',
+		'ruby',
+		'amber',
+		'crimson',
+		'indigo',
+		'khaki',
+		'plum',
+		'violet'
+	];
 
 	const animals = [
 		'ant',

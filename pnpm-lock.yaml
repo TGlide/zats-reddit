@@ -23,6 +23,7 @@ specifiers:
   publint: ^0.1.9
   svelte: ^3.54.0
   svelte-check: ^3.0.1
+  svelte-french-toast: ^1.0.3
   tailwindcss: ^3.2.7
   ts-node: ^10.9.1
   tslib: ^2.4.1
@@ -35,6 +36,7 @@ specifiers:
 dependencies:
   '@fontsource/inter': 4.5.15
   appwrite: 10.2.0
+  svelte-french-toast: 1.0.3_svelte@3.55.1
   uuid: 9.0.0
   zod: 3.20.6
 
@@ -2348,6 +2350,14 @@ packages:
       - sugarss
     dev: true
 
+  /svelte-french-toast/1.0.3_svelte@3.55.1:
+    resolution: {integrity: sha512-HBdutlqUx5FroucvcmMJstmTJDedXayiOSXubBYW6iL5x1PdHp+bOflGx5NxsOa6+EQckJnnVv1vJYgGsg7ngQ==}
+    dependencies:
+      svelte-writable-derived: 2.1.6_svelte@3.55.1
+    transitivePeerDependencies:
+      - svelte
+    dev: false
+
   /svelte-hmr/0.15.1_svelte@3.55.1:
     resolution: {integrity: sha512-BiKB4RZ8YSwRKCNVdNxK/GfY+r4Kjgp9jCLEy0DuqAKfmQtpL38cQK3afdpjw4sqSs4PLi3jIPJIFp259NkZtA==}
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
@@ -2406,10 +2416,17 @@ packages:
       typescript: 4.9.5
     dev: true
 
+  /svelte-writable-derived/2.1.6_svelte@3.55.1:
+    resolution: {integrity: sha512-vqOXuiESMZyP/kt/RD+nOk2RVHNakDm1K1hmfeGAKc4jzcSp5hEkUi43MDbkVlMurkSBlcMVTQwRQy4LcBT2lw==}
+    peerDependencies:
+      svelte: ^3.2.1
+    dependencies:
+      svelte: 3.55.1
+    dev: false
+
   /svelte/3.55.1:
     resolution: {integrity: sha512-S+87/P0Ve67HxKkEV23iCdAh/SX1xiSfjF1HOglno/YTbSTW7RniICMCofWGdJJbdjw3S+0PfFb1JtGfTXE0oQ==}
     engines: {node: '>= 8'}
-    dev: true
 
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}

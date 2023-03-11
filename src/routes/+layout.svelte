@@ -1,5 +1,6 @@
 <script lang="ts">
 	// Styles
+	import '$styles/index.css';
 	import '@fontsource/inter/300.css';
 	import '@fontsource/inter/400.css';
 	import '@fontsource/inter/500.css';
@@ -7,11 +8,12 @@
 	import '@fontsource/inter/700.css';
 	import '@fontsource/inter/800.css';
 	import '@fontsource/inter/900.css';
-	import '$styles/index.css';
 	// JS
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import { Filter } from '$entities/filter';
-	import { user, filter, subreddit } from './stores';
+	import toast, { Toaster } from 'svelte-french-toast';
+	import { filter, subreddit, user } from './stores';
+	import { onMount } from 'svelte';
 
 	function getHref(path: string, subreddit?: string) {
 		return subreddit ? `/r/${subreddit}${path}` : path;
@@ -29,7 +31,34 @@
 	] satisfies Path[];
 
 	$: isCreatePage = $page.url.pathname === '/create';
-	$: isPostPage = $page.url.pathname.match(/^\/r\/.+?\/.+?$/);
+	$: isPostPage = !!$page.params.post;
+
+	onMount(() => {
+		let resolve: null | (() => void);
+		let outerNavigating = false;
+
+		const unsubscribe = navigating.subscribe((navigating) => {
+			if (navigating) {
+				outerNavigating = true;
+				setTimeout(() => {
+					if (!outerNavigating) return;
+					toast.dismiss();
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					toast.promise(new Promise((r) => (resolve = r as any)), {
+						loading: 'Loading...',
+						success: 'Loaded!',
+						error: 'Failed to load'
+					});
+				}, 100);
+			} else {
+				outerNavigating = false;
+				resolve?.();
+				resolve = null;
+			}
+		});
+
+		return unsubscribe;
+	});
 </script>
 
 <svelte:head>
@@ -78,6 +107,16 @@
 		</div>
 	{/if}
 </div>
+
+<Toaster
+	toastOptions={{
+		className: 'border border-solid border-blue-5 font-sans',
+		iconTheme: {
+			primary: '#F06595',
+			secondary: 'white'
+		}
+	}}
+/>
 
 <style lang="postcss">
 	.tag,

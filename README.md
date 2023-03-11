@@ -40,7 +40,7 @@ It is also a experiment on using Zod for validation in a SvelteKit + Appwrite ap
 - [x] Implement votes functionality (upvote/downvote)
 - [x] Create comments
 - [x] Session
-- [ ] Make sure no duplicate accounts are created
+- [x] Make sure no duplicate accounts are created
 
 ### Niceties
 
