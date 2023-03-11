@@ -112,11 +112,13 @@ function getRandomUsername() {
 }
 
 type GetUserArgs = {
-	uuid: string;
+	uuid?: string;
+	name?: string;
 };
 export async function getUser(args: GetUserArgs) {
 	const res = await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_USERS, [
-		Query.equal('uuid', args.uuid)
+		...(args.uuid ? [Query.equal('uuid', args.uuid)] : []),
+		...(args.name ? [Query.equal('name', args.name)] : [])
 	]);
 
 	try {
@@ -141,7 +143,7 @@ export async function getUserSession(cookies: Cookies) {
 		const parsedUser = userSchema.safeParse(JSON.parse(user));
 		if (parsedUser.success) {
 			const userData = parsedUser.data;
-			const serverUser = users.find((u) => u.uuid === userData.uuid);
+			const serverUser = await getUser({ uuid: userData.uuid, name: userData.name });
 
 			if (userData.name === serverUser?.name) {
 				return userData;
@@ -151,7 +153,7 @@ export async function getUserSession(cookies: Cookies) {
 	}
 
 	let username = '';
-	while (!username || users.map((u) => u.name).includes(username)) {
+	while (!username || (await getUser({ name: username }))) {
 		username = getRandomUsername();
 	}
 
