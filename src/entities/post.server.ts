@@ -35,7 +35,7 @@ export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
 			APPWRITE_COLLECTION_TEXT_POSTS,
 			truthyArray([
 				args?.subreddit && Query.equal('subreddit', args?.subreddit),
-				!APPWRITE_ADMIN_MODE && Query.notEqual('restricted', true)
+				Query.notEqual('restricted', true)
 			])
 		)
 	]);
