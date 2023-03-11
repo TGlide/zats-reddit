@@ -26,7 +26,8 @@
 			<div class="flex items-center gap-1">
 				<Icon name="messages" size={16} />
 				<a class="cursor-pointer    hover:underline" href={commentsHref}>
-					{`${post.numComments} ${post.numComments === 1 ? 'comment' : 'comments'}`}
+					<!-- {`${post.numComments} ${post.numComments === 1 ? 'comment' : 'comments'}`} -->
+					view comments
 				</a>
 			</div>
 			<span>by {post.authorName ?? 'unknown author'}</span>

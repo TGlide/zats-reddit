@@ -1,11 +1,7 @@
-import {
-	APPWRITE_ADMIN_MODE,
-	APPWRITE_COLLECTION_COMMENTS,
-	APPWRITE_DB
-} from '$env/static/private';
+import { APPWRITE_COLLECTION_COMMENTS, APPWRITE_DB } from '$env/static/private';
 import { truthyArray } from '$helpers/array';
 import { createZodFunctionHandler } from '$helpers/zod';
-import { databases } from '$lib/appwrite.server';
+import { databases, isAdmin } from '$lib/appwrite.server';
 import { Query } from 'appwrite';
 import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
@@ -23,7 +19,7 @@ export async function getComments(args: GetCommentsArgs) {
 			APPWRITE_COLLECTION_COMMENTS,
 			truthyArray([
 				Query.equal('postId', args.postId),
-				!APPWRITE_ADMIN_MODE && Query.notEqual('restricted', true)
+				!isAdmin && Query.notEqual('restricted', true)
 			])
 		),
 		args.authorId

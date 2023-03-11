@@ -1,11 +1,7 @@
-import {
-	APPWRITE_ADMIN_MODE,
-	APPWRITE_COLLECTION_TEXT_POSTS,
-	APPWRITE_DB
-} from '$env/static/private';
+import { APPWRITE_COLLECTION_TEXT_POSTS, APPWRITE_DB } from '$env/static/private';
 import { truthyArray, uniqueByKey } from '$helpers/array';
 import { createZodFunctionHandler } from '$helpers/zod';
-import { databases } from '$lib/appwrite.server';
+import { databases, isAdmin } from '$lib/appwrite.server';
 import { Query } from 'appwrite';
 import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
@@ -35,7 +31,7 @@ export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
 			APPWRITE_COLLECTION_TEXT_POSTS,
 			truthyArray([
 				args?.subreddit && Query.equal('subreddit', args?.subreddit),
-				Query.notEqual('restricted', true)
+				!isAdmin && Query.notEqual('restricted', true)
 			])
 		)
 	]);
@@ -64,7 +60,7 @@ export async function getPost(args: GetPostArgs): Promise<ExpandedPost> {
 		);
 		const parsedPost = documentSchema.extend(postSchema.shape).parse(post);
 
-		if (parsedPost.restricted && parsedPost.authorId !== args.authorId && !APPWRITE_ADMIN_MODE) {
+		if (parsedPost.restricted && parsedPost.authorId !== args.authorId && !isAdmin) {
 			throw new Error('Unauthorized');
 		}
 
