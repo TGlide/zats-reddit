@@ -63,7 +63,7 @@
 		class="col-span-7 flex justify-end self-end whitespace-nowrap pb-0.5 lg:ml-auto lg:self-center lg:pb-0"
 	>
 		<span class="tag">
-			User: {$user}
+			User: {$user.name}
 		</span>
 	</div>
 </nav>

@@ -8,7 +8,7 @@ describe('Comment', () => {
 				text: 'Text',
 				upvotes: 0,
 				downvotes: 0,
-				author: 'Author',
+				authorId: 'Author',
 				$createdAt: '',
 				$id: 'a',
 				postId: '',
@@ -18,7 +18,7 @@ describe('Comment', () => {
 				text: 'Text',
 				upvotes: 0,
 				downvotes: 0,
-				author: 'Author',
+				authorId: 'Author',
 				$createdAt: '',
 				$id: 'a-a',
 				postId: '',
@@ -28,7 +28,7 @@ describe('Comment', () => {
 				text: 'Text',
 				upvotes: 0,
 				downvotes: 0,
-				author: 'Author',
+				authorId: 'Author',
 				$createdAt: '',
 				$id: 'a-b',
 				postId: '',
@@ -38,7 +38,7 @@ describe('Comment', () => {
 				text: 'Text',
 				upvotes: 0,
 				downvotes: 0,
-				author: 'Author',
+				authorId: 'Author',
 				$createdAt: '',
 				$id: 'a-b-a',
 				postId: '',
@@ -48,13 +48,12 @@ describe('Comment', () => {
 
 		const commentTree = buildCommentTree(comments);
 
-		it;
 		expect(commentTree).toEqual([
 			{
 				text: 'Text',
 				upvotes: 0,
 				downvotes: 0,
-				author: 'Author',
+				authorId: 'Author',
 				$createdAt: '',
 				$id: 'a',
 				postId: '',
@@ -63,7 +62,7 @@ describe('Comment', () => {
 						text: 'Text',
 						upvotes: 0,
 						downvotes: 0,
-						author: 'Author',
+						authorId: 'Author',
 						$createdAt: '',
 						$id: 'a-a',
 						postId: ''
@@ -72,7 +71,7 @@ describe('Comment', () => {
 						text: 'Text',
 						upvotes: 0,
 						downvotes: 0,
-						author: 'Author',
+						authorId: 'Author',
 						$createdAt: '',
 						$id: 'a-b',
 						postId: '',
@@ -81,7 +80,7 @@ describe('Comment', () => {
 								text: 'Text',
 								upvotes: 0,
 								downvotes: 0,
-								author: 'Author',
+								authorId: 'Author',
 								$createdAt: '',
 								$id: 'a-b-a',
 								postId: ''

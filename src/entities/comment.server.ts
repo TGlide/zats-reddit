@@ -5,10 +5,11 @@ import { Query } from 'appwrite';
 import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
 import { buildCommentTree, commentSchema, type Comment } from './comment';
+import { getUser } from './user.server';
 
 type GetCommentsArgs = {
 	postId: string;
-	author?: string;
+	authorId?: string;
 };
 
 export async function getComments(args: GetCommentsArgs) {
@@ -17,10 +18,10 @@ export async function getComments(args: GetCommentsArgs) {
 			Query.equal('postId', args.postId),
 			Query.notEqual('restricted', true)
 		]),
-		args.author
+		args.authorId
 			? await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, [
 					Query.equal('postId', args.postId),
-					Query.equal('author', args.author),
+					Query.equal('authorId', args.authorId),
 					Query.equal('restricted', true)
 			  ])
 			: undefined
@@ -37,24 +38,31 @@ export async function getComments(args: GetCommentsArgs) {
 		total += result.data.total;
 	});
 
-	return { commentTree: buildCommentTree(documents), total };
+	const documentsWithAuthorName = await Promise.all(
+		documents.map(async (comment) => {
+			const authorName = await getUser({ uuid: comment.authorId }).then((user) => user?.name);
+			return { ...comment, authorName };
+		})
+	);
+
+	return { commentTree: buildCommentTree(documentsWithAuthorName), total };
 }
 
 type PostCommentArgs = {
 	postId: string;
-	author: string;
+	authorId: string;
 	parentCommentId?: string;
 };
 
 export async function postComment(args: PostCommentArgs) {
-	const { postId, author, parentCommentId } = args;
+	const { postId, authorId, parentCommentId } = args;
 	const comment = await databases.createDocument(
 		APPWRITE_DB,
 		APPWRITE_COLLECTION_COMMENTS,
 		'unique()',
 		{
 			postId,
-			author,
+			authorId,
 			parentCommentId
 		}
 	);
@@ -67,7 +75,7 @@ export const createCommentHandler = createZodFunctionHandler(
 		text: z.string().trim().min(1),
 		postId: z.string(),
 		parentCommentId: z.string().optional(),
-		author: z.string().trim().min(1)
+		authorId: z.string().trim().min(1)
 	}),
 	async (args) => {
 		return await databases.createDocument(APPWRITE_DB, APPWRITE_COLLECTION_COMMENTS, 'unique()', {

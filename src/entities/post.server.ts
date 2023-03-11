@@ -6,17 +6,18 @@ import { z } from 'zod';
 import { documentSchema, documentsListSchema } from './appwrite';
 import { getComments } from './comment.server';
 import { postSchema, type ExpandedPost, type Post } from './post';
+import { getUser } from './user.server';
 
 type GetPostsArgs = {
 	subreddit?: string;
-	author?: string;
+	authorId?: string;
 };
 
 export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
-	const userPostsPromise = args?.author
+	const userPostsPromise = args?.authorId
 		? databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_TEXT_POSTS, [
 				...(args?.subreddit ? [Query.equal('subreddit', args?.subreddit)] : []),
-				Query.equal('author', args.author),
+				Query.equal('authorId', args.authorId),
 				Query.equal('restricted', true)
 		  ])
 		: undefined;
@@ -37,8 +38,9 @@ export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
 
 	const postsWithNumComments: Post[] = await Promise.all(
 		allDocs.map(async (post) => {
-			const comments = await getComments({ postId: post.$id, author: args?.author });
-			return { ...post, numComments: comments.total };
+			const comments = await getComments({ postId: post.$id, authorId: args?.authorId });
+			const authorName = await getUser({ uuid: post.authorId }).then((user) => user?.name);
+			return { ...post, numComments: comments.total, authorName };
 		})
 	);
 
@@ -47,7 +49,7 @@ export async function getPosts(args?: GetPostsArgs): Promise<Post[]> {
 
 type GetPostArgs = {
 	postId: string;
-	author?: string;
+	authorId?: string;
 };
 
 export async function getPost(args: GetPostArgs): Promise<ExpandedPost> {
@@ -59,16 +61,18 @@ export async function getPost(args: GetPostArgs): Promise<ExpandedPost> {
 		);
 		const parsedPost = documentSchema.extend(postSchema.shape).parse(post);
 
-		if (parsedPost.restricted && parsedPost.author !== args.author) {
+		if (parsedPost.restricted && parsedPost.authorId !== args.authorId) {
 			throw new Error('Unauthorized');
 		}
 
 		const { commentTree, total } = await getComments({ ...args });
+		const authorName = await getUser({ uuid: parsedPost.authorId }).then((user) => user?.name);
 
 		return {
 			...parsedPost,
 			commentTree,
-			numComments: total
+			numComments: total,
+			authorName
 		};
 	} catch (e) {
 		console.error(e);
@@ -81,7 +85,7 @@ export const createPostHandler = createZodFunctionHandler(
 		title: z.string().trim().min(1),
 		subreddit: z.string().trim().min(1),
 		description: z.string().optional(),
-		author: z.string().trim().min(1)
+		authorId: z.string().trim().min(1)
 	}),
 	async (args) => {
 		return await databases.createDocument(APPWRITE_DB, APPWRITE_COLLECTION_TEXT_POSTS, 'unique()', {

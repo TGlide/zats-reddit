@@ -7,12 +7,12 @@ export const postSchema = documentSchema.extend({
 	upvotes: z.number(),
 	downvotes: z.number(),
 	subreddit: z.string(),
-	author: z.string(),
+	authorId: z.string(),
 	description: z.string().nullable(),
 	restricted: z.boolean().nullable()
 });
 
-export type Post = z.infer<typeof postSchema> & { numComments: number };
+export type Post = z.infer<typeof postSchema> & { numComments: number; authorName?: string };
 export type ExpandedPost = Post & { commentTree: CommentTree };
 
 export function isPost(obj: unknown): obj is Post {

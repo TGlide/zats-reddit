@@ -1,7 +1,8 @@
 import { createCommentHandler, deleteCommentHandler } from '$entities/comment.server';
 import { getPost } from '$entities/post.server';
+import { getUserSession } from '$entities/user.server';
 import { getFormDataObj } from '$helpers/form';
-import { getSession } from '$lib/session.server';
+
 import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -9,7 +10,7 @@ export const load: PageServerLoad = async ({ params, parent }) => {
 	const { user } = await parent();
 
 	try {
-		const post = await getPost({ postId: params.post, author: user });
+		const post = await getPost({ postId: params.post, authorId: user.uuid });
 		return { post };
 	} catch (e) {
 		console.error(e);
@@ -19,9 +20,9 @@ export const load: PageServerLoad = async ({ params, parent }) => {
 
 export const actions: Actions = {
 	async reply({ request, cookies }) {
-		const user = getSession(cookies);
+		const user = await getUserSession(cookies);
 		const data = await getFormDataObj(request);
-		const result = createCommentHandler.parse({ ...data, author: user });
+		const result = createCommentHandler.parse({ ...data, authorId: user.uuid });
 
 		if (result.success) {
 			const comment = await result.execute();

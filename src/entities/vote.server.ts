@@ -7,13 +7,13 @@ import { documentsListSchema } from './appwrite';
 import { voteSchema } from './vote';
 
 type GetVotesArgs = {
-	author: string;
+	authorId: string;
 	parentId?: string;
 };
 
-export async function getVotes({ author, parentId }: GetVotesArgs) {
+export async function getVotes({ authorId, parentId }: GetVotesArgs) {
 	const votes = await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_VOTES, [
-		Query.equal('author', author),
+		Query.equal('authorId', authorId),
 		...(parentId ? [Query.equal('parentId', parentId)] : [])
 	]);
 	const voteDocs = documentsListSchema(voteSchema).parse(votes);
@@ -25,11 +25,11 @@ export const voteHandler = createZodFunctionHandler(
 		// We use this in the form action to redirect back to the post
 		redirectTo: z.string().url()
 	}),
-	async ({ author, parentId, direction, parentType }) => {
+	async ({ authorId, parentId, direction, parentType }) => {
 		// Check if user has already voted on this post
 		// If so, update the vote. Otherwise, create a new vote.
 		const votes = await databases.listDocuments(APPWRITE_DB, APPWRITE_COLLECTION_VOTES, [
-			Query.equal('author', author),
+			Query.equal('authorId', authorId),
 			Query.equal('parentId', parentId)
 		]);
 		const vote = votes.documents[0];
@@ -40,7 +40,7 @@ export const voteHandler = createZodFunctionHandler(
 			});
 		} else {
 			await databases.createDocument(APPWRITE_DB, APPWRITE_COLLECTION_VOTES, 'unique()', {
-				author,
+				authorId,
 				parentId,
 				direction,
 				parentType

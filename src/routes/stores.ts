@@ -1,5 +1,6 @@
 import { page } from '$app/stores';
 import { Filter } from '$entities/filter';
+import type { User } from '$entities/user';
 import { derived } from 'svelte/store';
 
 export const filter = derived(page, ($page) => {
@@ -7,7 +8,7 @@ export const filter = derived(page, ($page) => {
 });
 
 export const user = derived(page, ($page) => {
-	return $page.data.user;
+	return $page.data.user as User;
 });
 
 export const upvotes = derived(page, ($page) => {

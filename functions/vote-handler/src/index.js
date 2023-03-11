@@ -42,7 +42,6 @@ module.exports = async function (req, res) {
 		req.variables;
 	const { parentId, parentType } = JSON.parse(req.variables['APPWRITE_FUNCTION_EVENT_DATA']);
 
-	console.log('hey');
 	const parentVotes = await database.listDocuments(DB_ID, VOTES_COLLECTION_ID, [
 		sdk.Query.equal('parentId', parentId)
 	]);

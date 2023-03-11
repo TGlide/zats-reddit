@@ -29,7 +29,7 @@
 					{`${post.numComments} ${post.numComments === 1 ? 'comment' : 'comments'}`}
 				</a>
 			</div>
-			<span>by {post.author}</span>
+			<span>by {post.authorName}</span>
 		</div>
 	</div>
 </div>

@@ -3,6 +3,6 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const { user } = await parent();
-	const posts = await getPosts({ author: user });
+	const posts = await getPosts({ authorId: user.uuid });
 	return { posts };
 };

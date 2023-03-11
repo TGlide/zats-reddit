@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const voteSchema = z.object({
 	parentId: z.string().trim().min(1),
 	direction: z.enum(['UP', 'DOWN', 'NONE']),
-	author: z.string().trim().min(1),
+	authorId: z.string().trim().min(1),
 	parentType: z.enum(['POST', 'COMMENT'])
 });
 

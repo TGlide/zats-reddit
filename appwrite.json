@@ -31,12 +31,12 @@
 					"default": 0
 				},
 				{
-					"key": "author",
+					"key": "authorId",
 					"type": "string",
 					"status": "available",
 					"required": true,
 					"array": false,
-					"size": 64,
+					"size": 128,
 					"default": null
 				},
 				{
@@ -89,7 +89,7 @@
 					"key": "index_4",
 					"type": "key",
 					"status": "available",
-					"attributes": ["author", "restricted"],
+					"attributes": ["authorId", "restricted"],
 					"orders": ["ASC", "ASC"]
 				},
 				{
@@ -117,14 +117,14 @@
 					"key": "index_7",
 					"type": "key",
 					"status": "available",
-					"attributes": ["subreddit", "author", "restricted"],
+					"attributes": ["subreddit", "authorId", "restricted"],
 					"orders": ["ASC", "ASC", "ASC"]
 				},
 				{
 					"key": "index_5",
 					"type": "key",
 					"status": "available",
-					"attributes": ["$id", "author", "restricted"],
+					"attributes": ["$id", "authorId", "restricted"],
 					"orders": ["ASC", "ASC", "ASC"]
 				}
 			]
@@ -158,12 +158,12 @@
 					"default": 0
 				},
 				{
-					"key": "author",
+					"key": "authorId",
 					"type": "string",
 					"status": "available",
 					"required": true,
 					"array": false,
-					"size": 64,
+					"size": 128,
 					"default": null
 				},
 				{
@@ -211,13 +211,27 @@
 					"status": "available",
 					"attributes": ["postId"],
 					"orders": ["ASC"]
+				},
+				{
+					"key": "index_2",
+					"type": "key",
+					"status": "available",
+					"attributes": ["postId", "restricted"],
+					"orders": ["ASC", "ASC"]
+				},
+				{
+					"key": "index_3",
+					"type": "key",
+					"status": "available",
+					"attributes": ["postId", "restricted", "authorId"],
+					"orders": ["ASC", "ASC", "ASC"]
 				}
 			]
 		},
 		{
 			"$id": "63fe16124ca837706abe",
-			"$createdAt": "2023-02-28T14:56:18.315+00:00",
-			"$updatedAt": "2023-03-01T09:23:27.921+00:00",
+			"$createdAt": "2023-03-03T11:04:54.828+00:00",
+			"$updatedAt": "2023-03-03T11:04:54.828+00:00",
 			"$permissions": ["create(\"any\")", "read(\"any\")", "update(\"any\")", "delete(\"any\")"],
 			"databaseId": "63eec9cedfb0d01be8d2",
 			"name": "votes",
@@ -232,6 +246,15 @@
 					"array": false,
 					"elements": ["UP", "DOWN", "NONE"],
 					"format": "enum",
+					"default": null
+				},
+				{
+					"key": "authorId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 128,
 					"default": null
 				},
 				{
@@ -252,15 +275,6 @@
 					"elements": ["POST", "COMMENT"],
 					"format": "enum",
 					"default": null
-				},
-				{
-					"key": "author",
-					"type": "string",
-					"status": "available",
-					"required": true,
-					"array": false,
-					"size": 128,
-					"default": null
 				}
 			],
 			"indexes": [
@@ -268,14 +282,14 @@
 					"key": "index_1",
 					"type": "key",
 					"status": "available",
-					"attributes": ["author"],
+					"attributes": ["authorId"],
 					"orders": ["ASC"]
 				},
 				{
 					"key": "index_2",
 					"type": "key",
 					"status": "available",
-					"attributes": ["author", "parentId"],
+					"attributes": ["authorId", "parentId"],
 					"orders": ["ASC", "ASC"]
 				},
 				{
@@ -286,6 +300,37 @@
 					"orders": ["ASC"]
 				}
 			]
+		},
+		{
+			"$id": "640c6c1457a11e842256",
+			"$createdAt": "2023-03-11T11:55:00.360+00:00",
+			"$updatedAt": "2023-03-11T11:55:10.965+00:00",
+			"$permissions": [],
+			"databaseId": "63eec9cedfb0d01be8d2",
+			"name": "users",
+			"enabled": true,
+			"documentSecurity": false,
+			"attributes": [
+				{
+					"key": "name",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 128,
+					"default": null
+				},
+				{
+					"key": "uuid",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 128,
+					"default": null
+				}
+			],
+			"indexes": []
 		}
 	],
 	"functions": [
